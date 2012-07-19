@@ -109,8 +109,7 @@ namespace LutExplorer.Helpers
             {
                 // Get the entity with given values
                 IQueryable<PlayerEntity> listEntities = (from e in serviceContext.CreateQuery<PlayerEntity>(tableName)
-                                                        // where e.PartitionKey == playerEntity.PartitionKey && e.RowKey == playerEntity.RowKey
-                                                         where e.PartitionKey == playerEntity.PartitionKey
+                                                         where e.PartitionKey == playerEntity.PartitionKey && e.RowKey == playerEntity.RowKey
                                                          select e);
 
                 if (listEntities.ToList().Count > 0)
@@ -128,6 +127,37 @@ namespace LutExplorer.Helpers
 
         }
 
+        /// <summary>
+        /// Finds the player entity by the given player type and id
+        /// which are given as strings (usually this is the case when
+        /// retrieving the information from the cookies)
+        /// </summary>
+        /// <param name="playerType">The type fo the player</param>
+        /// <param name="id">The player id</param>
+        /// <returns>PlayerEntity if found</returns>
+        public PlayerEntity FindPlayerEntity(string playerType, string id)
+        {
+            try
+            {
+                // Get the entity with given values
+                IQueryable<PlayerEntity> listEntities = (from e in serviceContext.CreateQuery<PlayerEntity>(tableName)
+                                                         where e.PartitionKey == playerType && e.RowKey == id
+                                                         select e);
+
+                if (listEntities.ToList().Count > 0)
+                {
+                    return listEntities.FirstOrDefault();
+                }
+
+                // Otherwise return null
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
 
 
         public void TestAddPlayer()
