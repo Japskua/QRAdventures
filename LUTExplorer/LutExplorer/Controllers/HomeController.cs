@@ -27,7 +27,7 @@ namespace LutExplorer.Controllers
 
         public ActionResult About()
         {
-
+            // initialize the id and user type values
             string id = "";
             string userType = "";
 
@@ -41,19 +41,17 @@ namespace LutExplorer.Controllers
             }
 
             // Otherwise continue 
-
+            // Get the ID and user type
             id = cookie[playerId];
             userType = cookie[playerType];
 
+            // Save the infi to viewbag contents
             ViewBag.CookieContents = "Playertype is: " + cookie[playerType] + " and player id is: " + cookie[playerId];
-
 
             // Create the query
             PlayerEntity query = new PlayerEntity(PlayerEntity.UserType.Regular, 1);
 
             // Try to find the player entity
-            //PlayerEntity playerEntity = DatabaseManager.Instance.FindPlayerEntity(query);
-
             PlayerEntity playerEntity = DatabaseManager.Instance.FindPlayerEntity(userType, id);
 
             // Bad the info for displaying on the browser

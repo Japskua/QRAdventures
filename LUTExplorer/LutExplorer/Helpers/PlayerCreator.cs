@@ -6,13 +6,20 @@ using LutExplorer.Helpers.DatabaseEntities;
 
 namespace LutExplorer.Helpers
 {
+    /// <summary>
+    /// The PlayerCreator class handles creating new players
+    /// and deciding whether the player is achievement or regular one
+    /// </summary>
     public class PlayerCreator
     {
-
+        // The likelihood of having achievement player
         private int achievementLikelihood = 50;
 
         public PlayerEntity NewPlayerEntity;
 
+        /// <summary>
+        /// The constructor for the player creator
+        /// </summary>
         public PlayerCreator() 
         {
             NewPlayerEntity = new PlayerEntity(CreateUserType(), CreatePlayerId());
@@ -56,6 +63,12 @@ namespace LutExplorer.Helpers
             return playerId;
         }
 
+        /// <summary>
+        /// Tries to create the database entry with the player in question
+        /// </summary>
+        /// <param name="playerId">The id to be inserted</param>
+        /// <param name="playerType">The type of the player</param>
+        /// <returns>True if succesful, false if not</returns>
         public bool TryCreateDatabasePlayerEntry(int playerId, PlayerEntity.UserType playerType)
         {
             // First, try to find if the player entity exists
@@ -79,6 +92,13 @@ namespace LutExplorer.Helpers
 
         }
 
+        /// <summary>
+        /// Tries to create the player into the database in question
+        /// </summary>
+        /// <returns>
+        /// True if succeeded in adding the player to the database
+        /// False if not
+        /// </returns>
         public bool TryCreateDatabasePlayerEntry()
         {
             // First, try to find if the player entity exists

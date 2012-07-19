@@ -128,6 +128,10 @@ namespace LutExplorer.Helpers
             response.Cookies.Add(lutExplorerCookie);
         }
 
+        /// <summary>
+        ///  The error for not implemented exception
+        /// </summary>
+        /// <returns></returns>
         private Exception NotImplementedException()
         {
             throw new NotImplementedException();
