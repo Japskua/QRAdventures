@@ -21,7 +21,7 @@ namespace LutExplorer.Controllers
 
             // Create the cookie for the user in question
             CookieManager.Instance.CreateCookie(Response, Request);
-
+            
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace LutExplorer.Controllers
             ViewBag.CookieContents = "Playertype is: " + cookie[playerType] + " and player id is: " + cookie[playerId];
 
             // Create the query
-            PlayerEntity query = new PlayerEntity(PlayerEntity.UserType.Regular, 1);
+            //PlayerEntity query = new PlayerEntity(PlayerEntity.UserType.Regular, 1);
 
             // Try to find the player entity
             PlayerEntity playerEntity = DatabaseManager.Instance.FindPlayerEntity(userType, id);

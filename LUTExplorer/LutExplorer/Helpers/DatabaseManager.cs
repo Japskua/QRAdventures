@@ -72,6 +72,18 @@ namespace LutExplorer.Helpers
 
         #region Functions
 
+        public void SaveNextTreasure(PlayerEntity playerEntity, int nextTreasure)
+        {
+            // Find the player entity
+            if (FindPlayerEntity(playerEntity) != null)
+            {
+                // Update the value
+                playerEntity.CurrentSearchedTreasure = nextTreasure;
+                serviceContext.SaveChangesWithRetries();
+            }
+        }
+
+
         /// <summary>
         /// Saves the player entity to the storage database
         /// </summary>
@@ -79,7 +91,8 @@ namespace LutExplorer.Helpers
         public void SavePlayer(PlayerEntity playerEntity)
         {
             // First, check if the entity exists in the database or not
-            PlayerEntity checker = FindPlayerEntity(playerEntity);
+            //PlayerEntity checker = FindPlayerEntity(playerEntity);
+            PlayerEntity checker = FindPlayerEntity(playerEntity.PartitionKey, playerEntity.RowKey);
             if (checker != null)
             {
                 // Just update the value
@@ -96,7 +109,6 @@ namespace LutExplorer.Helpers
             // And finally, save the changes
             serviceContext.SaveChangesWithRetries();
         }
-
 
         /// <summary>
         /// Searches the table storage for the given player entity
