@@ -20,7 +20,7 @@ namespace LutExplorer.Controllers
             ViewBag.Message = "Welcome to ASP.NET MVC!";
 
             // Create the cookie for the user in question
-            CookieManager.Instance.CreateCookie(PlayerEntity.UserType.Regular, 1, Response, Request);
+            CookieManager.Instance.CreateCookie(Response, Request);
 
             return View();
         }

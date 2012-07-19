@@ -100,6 +100,7 @@
     <Compile Include="Helpers\CookieManager.cs" />
     <Compile Include="Helpers\DatabaseEntities\PlayerEntity.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
+    <Compile Include="Helpers\PlayerCreator.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

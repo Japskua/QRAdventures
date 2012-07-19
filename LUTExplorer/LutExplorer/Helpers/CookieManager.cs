@@ -67,6 +67,7 @@ namespace LutExplorer.Helpers
             if (CheckIfCookieExists(request) == true)
             {
                 // Just leave
+
                 return;
             }
 
@@ -82,10 +83,57 @@ namespace LutExplorer.Helpers
 
             // And finally, save the cookie to the browser
             response.Cookies.Add(lutExplorerCookie);
-
-
-
         }
+
+
+        /// <summary>
+        /// Creates the cookie randomly, according to the predefined ways
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="request"></param>
+        public void CreateCookie(HttpResponseBase response, HttpRequestBase request)
+        {
+
+            // First, check if the cookie exists
+            if (CheckIfCookieExists(request) == true)
+            {
+                // Just leave
+
+                return;
+            }
+
+            // Otherwise, create the cookie
+            HttpCookie lutExplorerCookie = new HttpCookie(cookieName);
+
+            // Create the player creator
+            PlayerCreator playerCreator = new PlayerCreator();
+
+            // Next, try to create the new value to the database
+            if (playerCreator.TryCreateDatabasePlayerEntry() == false)
+            {
+                // Do nothing for now
+                throw NotImplementedException();
+            }
+
+            // Else, keep on going
+
+            // Set the cookie values
+            lutExplorerCookie[playerType] = playerCreator.NewPlayerEntity.PartitionKey;
+            lutExplorerCookie[playerId] = playerCreator.NewPlayerEntity.RowKey;
+
+            // Set the expiration date
+            lutExplorerCookie.Expires = DateTime.Now.AddDays(expirationDays);
+
+            // And finally, save the cookie to the browser
+            response.Cookies.Add(lutExplorerCookie);
+        }
+
+        private Exception NotImplementedException()
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         /// <summary>
         /// Checks if the given cookie exists
