@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LutExplorer", "LutExplorer\LutExplorer.csproj", "{2C80C4D2-0AE1-47F3-BEC7-FF7F494B26D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LutExplorer.Tests", "LutExplorer.Tests\LutExplorer.Tests.csproj", "{95EC36D3-C198-4654-ADD3-B4A189A7B1AA}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "LutExplorer.Azure", "LutExplorer.Azure\LutExplorer.Azure.ccproj", "{6EB9663C-03E7-4FB4-8C10-F5064E5480FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C80C4D2-0AE1-47F3-BEC7-FF7F494B26D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C80C4D2-0AE1-47F3-BEC7-FF7F494B26D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C80C4D2-0AE1-47F3-BEC7-FF7F494B26D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C80C4D2-0AE1-47F3-BEC7-FF7F494B26D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95EC36D3-C198-4654-ADD3-B4A189A7B1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95EC36D3-C198-4654-ADD3-B4A189A7B1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95EC36D3-C198-4654-ADD3-B4A189A7B1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95EC36D3-C198-4654-ADD3-B4A189A7B1AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB9663C-03E7-4FB4-8C10-F5064E5480FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB9663C-03E7-4FB4-8C10-F5064E5480FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB9663C-03E7-4FB4-8C10-F5064E5480FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB9663C-03E7-4FB4-8C10-F5064E5480FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
