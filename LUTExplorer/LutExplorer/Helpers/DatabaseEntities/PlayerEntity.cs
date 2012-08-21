@@ -21,6 +21,8 @@ namespace LutExplorer.Helpers.DatabaseEntities
         {
             Achievements,
             Regular,
+            Context,
+            ContextAchievements
         };
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace LutExplorer.Helpers.DatabaseEntities
             // Create the basic values
             TreasureChest = new Dictionary<int, DateTime>();
             Achievements = new Dictionary<string, DateTime>();
-            CurrentSearchedTreasure = 1;
+            this.CurrentSearchedTreasure = 1;
 
 
         }

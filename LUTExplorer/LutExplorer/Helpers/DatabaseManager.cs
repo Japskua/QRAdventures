@@ -74,11 +74,13 @@ namespace LutExplorer.Helpers
 
         public void SaveNextTreasure(PlayerEntity playerEntity, int nextTreasure)
         {
+            
             // Find the player entity
             if (FindPlayerEntity(playerEntity) != null)
             {
                 // Update the value
                 playerEntity.CurrentSearchedTreasure = nextTreasure;
+                
                 serviceContext.SaveChangesWithRetries();
             }
         }

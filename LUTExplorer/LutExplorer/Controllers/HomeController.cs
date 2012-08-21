@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using LutExplorer.Helpers;
 using LutExplorer.Helpers.DatabaseEntities;
-using LutExplorer.Helpers;
 
 namespace LutExplorer.Controllers
 {
@@ -22,6 +21,25 @@ namespace LutExplorer.Controllers
             // Create the cookie for the user in question
             CookieManager.Instance.CreateCookie(Response, Request);
             
+            return View();
+        }
+
+        /// <summary>
+        /// Action result for the TestView page
+        /// </summary>
+        /// <returns>The view</returns>
+        public ActionResult TestView()
+        {
+                       
+            PlayerEntity playerEntity = CookieManager.Instance.GetPlayerAutomatically(Request);
+
+            // Bag the info for displaying on the browser
+            ViewBag.Message = "hai ";
+            // Modifying player info
+            DatabaseManager.Instance.SaveNextTreasure(playerEntity, 3);
+                        
+
+            // Return the view
             return View();
         }
 
@@ -45,17 +63,26 @@ namespace LutExplorer.Controllers
             id = cookie[playerId];
             userType = cookie[playerType];
 
-            // Save the infi to viewbag contents
+            // Save the info to viewbag contents
             ViewBag.CookieContents = "Playertype is: " + cookie[playerType] + " and player id is: " + cookie[playerId];
 
-            // Create the query
+            // Create the query <<--- Not Needed anymore
             //PlayerEntity query = new PlayerEntity(PlayerEntity.UserType.Regular, 1);
 
+            // Search the database for player entity
             // Try to find the player entity
             PlayerEntity playerEntity = DatabaseManager.Instance.FindPlayerEntity(userType, id);
 
-            // Bad the info for displaying on the browser
-            ViewBag.Message = "Player " + playerEntity.RowKey + "Playing as " + playerEntity.PartitionKey + " player." +
+            // Modifying player info
+            //DatabaseManager.Instance.SaveNextTreasure(playerEntity, 3);
+
+            // Save the info
+            // Throw the whole player entity and the manager will handle the rest
+            
+            //DatabaseManager.Instance.SavePlayer(playerEntity);
+
+            // Bag the info for displaying on the browser
+            ViewBag.Message = "Player " + playerEntity.RowKey + " Playing as " + playerEntity.PartitionKey + " player." +
                                "\nCurrently searching for treasure number " + playerEntity.CurrentSearchedTreasure.ToString();
 
 

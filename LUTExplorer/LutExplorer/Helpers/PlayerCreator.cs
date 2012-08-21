@@ -12,6 +12,9 @@ namespace LutExplorer.Helpers
     /// </summary>
     public class PlayerCreator
     {
+        // TODO: Change the player to be placed in 4 different categories, 
+        // instead of the current achievement - no achievement
+
         // The likelihood of having achievement player
         private int achievementLikelihood = 50;
 
@@ -33,6 +36,8 @@ namespace LutExplorer.Helpers
         {
             // Create a random value
             Random random = new Random(DateTime.Now.GetHashCode());
+
+            // TODO: Divide into 4 instead of 2
 
             // If the value is bigger than achievement likelihood value
             if (random.Next(1, 100) > achievementLikelihood)
@@ -57,6 +62,7 @@ namespace LutExplorer.Helpers
         public int CreatePlayerId()
         {
             int playerId = 0;
+
 
             playerId += DateTime.Now.GetHashCode();
 

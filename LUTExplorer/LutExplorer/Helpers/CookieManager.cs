@@ -182,10 +182,10 @@ namespace LutExplorer.Helpers
         }
 
         /// <summary>
-        /// Gets the player based on the cookie information
+        /// Gets the player from the database based on the cookie information
         /// </summary>
         /// <param name="cookie">The cookie which contains the information</param>
-        /// <returns>The player if found</returns>
+        /// <returns>The player entity from the database if found</returns>
         public PlayerEntity GetPlayerFromCookie(HttpCookie cookie)
         {
             // Try to find the player entity
@@ -199,7 +199,7 @@ namespace LutExplorer.Helpers
         /// player browser.
         /// </summary>
         /// <param name="request">The HttpRequestBase that is used to get requests from the browser</param>
-        /// <returns>The player entity if found</returns>
+        /// <returns>The player entity from the database if found</returns>
         public PlayerEntity GetPlayerAutomatically(HttpRequestBase request)
         {
             return GetPlayerFromCookie(GetCookie(request));
