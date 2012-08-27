@@ -39,7 +39,8 @@ namespace LutExplorer.Helpers.DatabaseEntities
             // Create the basic values
             TreasureChest = new Dictionary<int, DateTime>();
             Achievements = new Dictionary<string, DateTime>();
-            this.CurrentSearchedTreasure = 1;
+            CurrentSearchedTreasure = 1;
+            CurrentRoute = 1;
 
 
         }
@@ -52,6 +53,10 @@ namespace LutExplorer.Helpers.DatabaseEntities
         /// </summary>
         public int CurrentSearchedTreasure { get; set; }
 
+        /// <summary>
+        /// The previous treasure is for easy logging - to tell if the player just loaded the page again.
+        /// </summary>
+        public int CurrentRoute { get; set; }
         /// <summary>
         /// The Treasure Chest holds all the treasures the player
         /// has achieved and the times when those have been gained

@@ -100,12 +100,30 @@
     <Compile Include="Helpers\CookieManager.cs" />
     <Compile Include="Helpers\DatabaseEntities\PlayerEntity.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
+    <Compile Include="Helpers\RouteManager.cs" />
+    <Compile Include="Helpers\GuaranteedRandom.cs" />
     <Compile Include="Helpers\GameManager.cs" />
     <Compile Include="Helpers\PlayerCreator.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\pics\10\p.jpg" />
+    <Content Include="Content\pics\11\h.jpg" />
+    <Content Include="Content\pics\11\p.jpg" />
+    <Content Include="Content\pics\12\p.jpg" />
+    <Content Include="Content\pics\13\p.jpg" />
+    <Content Include="Content\pics\2\p.jpg" />
+    <Content Include="Content\pics\3\p.jpg" />
+    <Content Include="Content\pics\4\p.jpg" />
+    <Content Include="Content\pics\5\h.jpg" />
+    <Content Include="Content\pics\5\p.jpg" />
+    <Content Include="Content\pics\6\p.jpg" />
+    <Content Include="Content\pics\7\h.jpg" />
+    <Content Include="Content\pics\7\p.jpg" />
+    <Content Include="Content\pics\8\p.jpg" />
+    <Content Include="Content\pics\9\p.jpg" />
+    <Content Include="Content\pics\IMAG0043.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -176,6 +194,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\context\" />
+    <Folder Include="Content\pics\14\" />
+    <Folder Include="Content\pics\15\" />
+    <Folder Include="Content\pics\16\" />
+    <Folder Include="Content\pics\17\" />
+    <Folder Include="Content\pics\18\" />
+    <Folder Include="Content\pics\19\" />
+    <Folder Include="Content\pics\1\" />
+    <Folder Include="Content\pics\20\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
