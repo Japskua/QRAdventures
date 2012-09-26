@@ -15,13 +15,50 @@ namespace LutExplorer.Controllers
         private string playerId = "PlayerId";
         
         
+        //public ActionResult Index()
+        //{
+        //    ViewBag.Message = "Welcome to ASP.NET MVC!";
+
+        //    ViewBag.header = Request.UrlReferrer;
+
+        //    // Create the cookie for the user in question
+        //    CookieManager.Instance.CreateCookie(Response, Request);
+
+        //    return View();
+        //}
+
+
+        /// <summary>
+        /// Actual index page
+        /// Or at least it should be.
+        /// </summary>
+        /// <returns>the view</returns>
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to ASP.NET MVC!";
-            
+
+            ViewBag.header = Request.UrlReferrer;
+
             // Create the cookie for the user in question
             CookieManager.Instance.CreateCookie(Response, Request);
+            
+            // Get player stats from db
+            PlayerEntity playerEntity = CookieManager.Instance.GetPlayerAutomatically(Request);
+            // Start a game manageer instance
+            GameManager gameManager = new GameManager();
 
+            // get page number from redirect
+            //int pageNumber = RouteManager.getPageNumberFromRequest(Request);
+            int pageNumber = playerEntity.CurrentSearchedTreasure;
+
+            //  Get page content and bag it for view
+            Tuple<string, string, string, string> tuple = gameManager.getPageContent(playerEntity, pageNumber);
+            ViewBag.Message = tuple.Item1;
+            ViewBag.Context = tuple.Item2;
+            ViewBag.Achievement = tuple.Item3;
+            ViewBag.clue = tuple.Item4;
+
+            // return the view and gtfo
             return View();
         }
 
@@ -31,20 +68,27 @@ namespace LutExplorer.Controllers
         /// <returns>The view</returns>
         public ActionResult TestView()
         {
-            int pageNumber = 1;
-
+         
+            // Get player from db
             PlayerEntity playerEntity = CookieManager.Instance.GetPlayerAutomatically(Request);
             GameManager gameManager = new GameManager();
+
+            // get page number from redirect
+
+            //int pageNumber = RouteManager.getPageNumberFromRequest(Request);
 
             // Get the page content...
             // and bag the info for displaying on the browser
             
-            Tuple<string,string,string,string> tuple = gameManager.getPageContent(playerEntity, playerEntity.CurrentSearchedTreasure);
+            // page number for debugginh
+            int pageNumber = playerEntity.CurrentSearchedTreasure;
+
+            Tuple<string,string,string,string> tuple = gameManager.getPageContent(playerEntity, pageNumber);
             ViewBag.Message = tuple.Item1;
             ViewBag.Context = tuple.Item2;
             ViewBag.Achievement = tuple.Item3;
             ViewBag.clue = tuple.Item4;
-
+            
 
             // earlier debugging shit: 
             //// get the context info for correct checkpoint or error for wrong one

@@ -98,6 +98,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CookieManager.cs" />
+    <Compile Include="Helpers\DatabaseEntities\AchievementEntity.cs" />
+    <Compile Include="Helpers\DatabaseEntities\TreasureEntity.cs" />
     <Compile Include="Helpers\DatabaseEntities\PlayerEntity.cs" />
     <Compile Include="Helpers\DatabaseManager.cs" />
     <Compile Include="Helpers\RouteManager.cs" />

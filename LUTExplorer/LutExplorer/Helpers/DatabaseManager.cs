@@ -21,6 +21,8 @@ namespace LutExplorer.Helpers
 
         // The table name
         private string tableName = "lutexplorer";
+        private string achievementTable = "achievements";
+        private string treasureTable = "treasures";
         
         // The required classes for connecting to the service
         private CloudStorageAccount storageAccount;
@@ -37,6 +39,8 @@ namespace LutExplorer.Helpers
 
             // Create the table if it doesn't exist
             tableClient.CreateTableIfNotExist(tableName);
+            tableClient.CreateTableIfNotExist(achievementTable);
+            tableClient.CreateTableIfNotExist(treasureTable);
             
             // Get the data service context
             serviceContext = tableClient.GetDataServiceContext();
@@ -99,7 +103,7 @@ namespace LutExplorer.Helpers
             // therefore we should update it before
             // but that can't be done before the player is saved to the db in the first place.
 
-            // TL;DR DO NOT USE FOR UPDATING ANYTHING, IT WILL NOT WORK!
+            // TL;DR some bodging has been done. 
 
             //serviceContext.UpdateObject(playerEntity);
             //serviceContext.SaveChangesWithRetries();
@@ -113,7 +117,7 @@ namespace LutExplorer.Helpers
 
             // then do the query.
                 // First, check if the entity exists in the database or not
-                //PlayerEntity checker = FindPlayerEntity(playerEntity);
+                
                 PlayerEntity checker = FindPlayerEntity(playerEntity.PartitionKey, playerEntity.RowKey);
                 if (checker != null)
                 {
@@ -131,8 +135,27 @@ namespace LutExplorer.Helpers
                 }
 
                 // And finally, save the changes
+                // data here is for debugging, no real reason to store it
                 DataServiceResponse data = serviceContext.SaveChangesWithRetries();
         }
+
+        /// <summary>
+        /// A very untested method to store achivements into a seperate table.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="player"></param>
+        public void SaveAchievement(string name, PlayerEntity player)
+        {
+            serviceContext.AddObject(achievementTable, new AchievementEntity(player.RowKey, name));
+            serviceContext.SaveChangesWithRetries();
+        }
+
+        public void SaveTreasure(string name, PlayerEntity player)
+        {
+            serviceContext.AddObject(treasureTable, new TreasureEntity(player.RowKey, name)); // rowkey = ucid
+            serviceContext.SaveChangesWithRetries();
+        }
+
 
         /// <summary>
         /// Searches the table storage for the given player entity
@@ -167,6 +190,8 @@ namespace LutExplorer.Helpers
         /// Finds the player entity by the given player type and id
         /// which are given as strings (usually this is the case when
         /// retrieving the information from the cookies)
+        /// THIS IS the one for some reason we're using to do player searches
+        /// Dunno why. Dillygaf.
         /// </summary>
         /// <param name="playerType">The type fo the player</param>
         /// <param name="id">The player id</param>
@@ -179,11 +204,75 @@ namespace LutExplorer.Helpers
                 IQueryable<PlayerEntity> listEntities = (from e in serviceContext.CreateQuery<PlayerEntity>(tableName)
                                                          where e.PartitionKey == playerType && e.RowKey == id
                                                          select e);
+
+
+                    if (listEntities.ToList().Count() > 0)
+                    {
+                        //return listEntities.FirstOrDefault();
+
+                        PlayerEntity player = listEntities.FirstOrDefault();
+
+                        // query the treasure database too
+                        //IQueryable<TreasureEntity> 
+                        IQueryable<TreasureEntity> treasureEntities = (from e in serviceContext.CreateQuery<TreasureEntity>(treasureTable)
+                                                                       where e.PartitionKey == player.RowKey // partition key for treasure table == plid
+                                                                       select e);
+                        // and append the treasure dictionary accordingly
+                        //
+                        //right, because this is the gayest thing ever I'm going to need to just nest these try-catch blocks here
+                        // since the db query doesn't return null or anything, instead it goes tits up.
+
+                        try
+                        {
+                            foreach (TreasureEntity t in treasureEntities)
+                            {
+                                if (player.TreasureChest == null)
+                                {
+                                    player.TreasureChest = new Dictionary<int, DateTime>();
+                                }
+
+                                if (!player.TreasureChest.ContainsKey(Convert.ToInt32(t.RowKey)))
+                                    player.TreasureChest.Add(Convert.ToInt32(t.RowKey), Convert.ToDateTime(t.Timestamp));
+
+                            }
+                        }
+                        catch (Exception)
+                        { 
+                            // if you are wondering why this is already the third nested try-catch block within this method...
+                            // it is because the IQueryable object doesn't have a method in it to tell if it contains anything or not...
+                            // and it throws exception if you try and convert it to a list :|
+                        }
+
+                        // Then we try and query the achievement table
+                        // god help us all
+
+                        IQueryable<AchievementEntity> achievementEntities = (from e in serviceContext.CreateQuery<AchievementEntity>(achievementTable)
+                                                                       where e.PartitionKey == player.RowKey // partition key for achievement table == plid
+                                                                       select e);
+                        try
+                        {
+                            foreach (AchievementEntity t in achievementEntities)
+                            {
+                                if (player.Achievements == null)
+                                {
+                                    player.Achievements = new Dictionary<string, DateTime>();
+                                }
+
+                                if (!player.Achievements.ContainsKey(Convert.ToString(t.RowKey)))
+                                    player.Achievements.Add(Convert.ToString(t.RowKey), Convert.ToDateTime(t.Timestamp));
+
+                            }
+                        }
+                        catch (Exception)
+                        {
+                         
+                        }
+ 
+
+
+                        return player;
+                    }
                 
-                if (listEntities.ToList().Count > 0)
-                {
-                    return listEntities.FirstOrDefault();
-                }
 
                 // Otherwise return null
                 return null;

@@ -39,6 +39,7 @@ namespace LutExplorer.Helpers.DatabaseEntities
             // Create the basic values
             TreasureChest = new Dictionary<int, DateTime>();
             Achievements = new Dictionary<string, DateTime>();
+            
             CurrentSearchedTreasure = 1;
             CurrentRoute = 1;
 

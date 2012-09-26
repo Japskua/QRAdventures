@@ -75,9 +75,13 @@ namespace LutExplorer.Helpers
                 
                 // Save the changes
                 DatabaseManager.Instance.SavePlayer(player);
+
+                DatabaseManager.Instance.SaveTreasure(treasure.ToString(), player);
             }
 
-        }
+            }
+
+        
 
         /// <summary>
         /// Gets the current searched treasure
@@ -98,29 +102,26 @@ namespace LutExplorer.Helpers
         /// <param name="achievement">The achievement gained</param>
         public void GetAchievement(PlayerEntity player, string achievement)
         {
-            // Check if the player is achievement player or not
-            if (player.PartitionKey.Equals(PlayerEntity.UserType.Regular.ToString()))
+            
+            if (player.TreasureChest == null)
             {
-                // Regular player, just return from here
-                return;
+                player.TreasureChest = new Dictionary<int, DateTime>();
             }
 
-            // If the achievements list does not exist, create it (just to be sure)
-            if (player.Achievements == null)
-            {
-                player.Achievements = new Dictionary<string,DateTime>();
-            }
-
-            // Now, save the achivement to the player information
+            // Check if the player does not have the treasure yet
             if (!player.Achievements.ContainsKey(achievement))
             {
+                // Add the treasure to the treasure chest
                 player.Achievements.Add(achievement, DateTime.Now);
-
-                // And save the values to the database
+                                                
+                // Save the changes
                 DatabaseManager.Instance.SavePlayer(player);
+
+                DatabaseManager.Instance.SaveAchievement(achievement, player);
             }
 
         }
+
 
         /// <summary>
         ///  Contains the logic to work out the actual page content
@@ -226,8 +227,8 @@ namespace LutExplorer.Helpers
                     return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee yhden 7-vaiheen hissin liepeillä.\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
                 case 11:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg width=\"40%\">\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg width=40%>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=tip()><h2>anna vihje</h2></a></p>";
                 case 12:
                     return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Olet matkalla ylioppilastalolle.\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
@@ -256,6 +257,42 @@ namespace LutExplorer.Helpers
         }
 
         /// <summary>
+        /// A method to work out what achievement to give based on page number
+        /// </summary>
+        /// <param name="pageNumber">Page Number</param>
+        /// <returns> NULL if no achievement, achievement name otherwise </returns>
+
+        public string GetAchievementFromNumber(int pageNumber)
+        {
+
+            switch (pageNumber)
+            {
+
+                case 1:
+                    return null;
+                case 2:
+                    return null;
+                case 3:
+                    return null;
+                case 4:
+                    return null;
+                case 5:
+                    return null;
+                case 6:
+                    return null;
+                case 7:
+                    return null;
+                case 8:
+                    return null;
+                case 9:
+                    return null;
+                case 10:
+                    return null;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// The only method that needs to be called outside this class itself
         /// Works out what content needs to be on the page and returns it in a tuple.
         /// Calls all other necessary methods that return the actual raw-html as a string.
@@ -265,9 +302,12 @@ namespace LutExplorer.Helpers
         /// <returns>All of the necessary page content in a string, string, string, string -type Tuple</returns>
         public Tuple<string,string,string,string> getPageContent(PlayerEntity player, int pageNumber)
         {
+            // TODO: handlers for page reload and restardation
+            // if pageNumber==998 restart game
 
             // player is at the right checkpoint
 
+            // player has completed the game
             if (player.CurrentSearchedTreasure == 0)
             {
                 player.CurrentSearchedTreasure = 1;
@@ -281,6 +321,8 @@ namespace LutExplorer.Helpers
                 // you can has treasure
                 // my precious
                 GetTreasure(player, pageNumber);
+                
+                
                 //what is the player's type?
                 switch (player.PartitionKey)
                 {
@@ -288,10 +330,12 @@ namespace LutExplorer.Helpers
                         return new Tuple<string, string, string, string>("Löysit rastin!", "", "",  getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)) );
                         
                     case "Achievements":
+                        // GET achievement here
                         return new Tuple<string, string, string, string>("Löysit rastin!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     case "Context":
                         return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     case "ContextAchievements":
+                        // get achievement here!
                         return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     default:
                         return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
@@ -300,14 +344,28 @@ namespace LutExplorer.Helpers
             
                 //if this is just a page reload
             else if (pageNumber == RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure) ) {
+
+                // if player gets achievements, get reload achievement 
+
                 return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
             }
 
              // player is at the wrong checkpoint
             else
             {
+                if (pageNumber == 1) // does the player just want to start over?
+                {
+                    // TODO: add a link to reload page
+                    return new Tuple<string, string, string, string>("Olet väärällä rastilla. Vai aloitetaanko uusi kierros?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                }
+
+                // Get explorer achievement
+
                 return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure) );
             }
         }
+
+
+        
     }
 }
