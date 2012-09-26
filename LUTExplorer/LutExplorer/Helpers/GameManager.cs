@@ -102,10 +102,11 @@ namespace LutExplorer.Helpers
         /// <param name="achievement">The achievement gained</param>
         public void GetAchievement(PlayerEntity player, string achievement)
         {
+            if (achievement == null) return;
             
-            if (player.TreasureChest == null)
+            if (player.Achievements == null)
             {
-                player.TreasureChest = new Dictionary<int, DateTime>();
+                player.Achievements = new Dictionary<string, DateTime>();
             }
 
             // Check if the player does not have the treasure yet
@@ -269,9 +270,9 @@ namespace LutExplorer.Helpers
             {
 
                 case 1:
-                    return null;
+                    return "ykkönen";
                 case 2:
-                    return null;
+                    return "kakkonen";
                 case 3:
                     return null;
                 case 4:
@@ -331,11 +332,17 @@ namespace LutExplorer.Helpers
                         
                     case "Achievements":
                         // GET achievement here
+                        GetAchievement(player, GetAchievementFromNumber(pageNumber));
+                        //return content
                         return new Tuple<string, string, string, string>("Löysit rastin!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                    
                     case "Context":
                         return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                    
                     case "ContextAchievements":
-                        // get achievement here!
+                        // GET achievement here
+                        GetAchievement(player, GetAchievementFromNumber(pageNumber));
+
                         return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     default:
                         return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");

@@ -106,6 +106,21 @@ header h1, #header h1 {
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 4px 0 0 0;
     -moz-border-radius: 4px 0 0 0;
+
+}
+
+#left 
+{   
+    width:400px;
+    display:block;
+    float:left;
+}
+
+#right
+{
+    width: 200px
+    display:block;
+    float:right;
 }
 
 footer, 

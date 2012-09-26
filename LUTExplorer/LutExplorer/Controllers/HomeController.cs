@@ -58,6 +58,8 @@ namespace LutExplorer.Controllers
             ViewBag.Achievement = tuple.Item3;
             ViewBag.clue = tuple.Item4;
 
+
+            
             // return the view and gtfo
             return View();
         }
