@@ -12,11 +12,9 @@ namespace LutExplorer.Helpers
     /// </summary>
     public class PlayerCreator
     {
-        // TODO: Change the player to be placed in 4 different categories, 
-        // instead of the current achievement - no achievement
 
         // The likelihood of having achievement player
-        private int achievementLikelihood = 50;
+        //private int achievementLikelihood = 50;
 
         public PlayerEntity NewPlayerEntity;
 
@@ -36,22 +34,27 @@ namespace LutExplorer.Helpers
         {
             // Create a random value
             Random random = new Random(DateTime.Now.GetHashCode());
-
-            // TODO: Divide into 4 instead of 2
-
+            int number = random.Next(1, 100);
+            
+            // Dividing players into two groups
             // If the value is bigger than achievement likelihood value
-            if (random.Next(1, 100) > achievementLikelihood)
-            {
-                // Return achievement type play
-                return PlayerEntity.UserType.Achievements;
-            }
-            else
-            {
-                // Otherwise, return regular play
-                return PlayerEntity.UserType.Regular;
-            }
+            //if (random.Next(1, 100) > achievementLikelihood)
+            //{
+            //    // Return achievement type play
+            //    return PlayerEntity.UserType.Achievements;
+            //}
+            //else
+            //{
+            //    // Otherwise, return regular play
+            //    return PlayerEntity.UserType.Regular;
+            //}
 
 
+            // dividing players into four groups
+            if (number < 26) return PlayerEntity.UserType.Regular;
+            else if (number < 51) return PlayerEntity.UserType.Achievements;
+            else if (number < 76) return PlayerEntity.UserType.Context;
+            else return PlayerEntity.UserType.ContextAchievements;
         }
 
         /// <summary>

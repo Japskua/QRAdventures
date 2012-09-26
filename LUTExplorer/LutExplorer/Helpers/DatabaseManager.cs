@@ -21,6 +21,7 @@ namespace LutExplorer.Helpers
 
         // The table name
         private string tableName = "lutexplorer";
+        
         // The required classes for connecting to the service
         private CloudStorageAccount storageAccount;
         private CloudTableClient tableClient;
@@ -36,7 +37,7 @@ namespace LutExplorer.Helpers
 
             // Create the table if it doesn't exist
             tableClient.CreateTableIfNotExist(tableName);
-
+            
             // Get the data service context
             serviceContext = tableClient.GetDataServiceContext();
         
@@ -74,13 +75,15 @@ namespace LutExplorer.Helpers
 
         public void SaveNextTreasure(PlayerEntity playerEntity, int nextTreasure)
         {
+
+            // Find the player entity  - !! what the fuck for?!?
+            //PlayerEntity pe = FindPlayerEntity(playerEntity);  
             
-            // Find the player entity
-            if (FindPlayerEntity(playerEntity) != null)
+            if (playerEntity != null)
             {
                 // Update the value
                 playerEntity.CurrentSearchedTreasure = nextTreasure;
-                
+                serviceContext.UpdateObject(playerEntity);
                 serviceContext.SaveChangesWithRetries();
             }
         }
@@ -92,24 +95,43 @@ namespace LutExplorer.Helpers
         /// <param name="playerEntity">The player entity to be saved</param>
         public void SavePlayer(PlayerEntity playerEntity)
         {
-            // First, check if the entity exists in the database or not
-            //PlayerEntity checker = FindPlayerEntity(playerEntity);
-            PlayerEntity checker = FindPlayerEntity(playerEntity.PartitionKey, playerEntity.RowKey);
-            if (checker != null)
-            {
-                // Just update the value
-                checker.CurrentSearchedTreasure = playerEntity.CurrentSearchedTreasure;
-                checker.Achievements = playerEntity.Achievements;
-                checker.TreasureChest = playerEntity.TreasureChest;
-            }
-            else
-            {
-                // Otherwise, save the entity
-                serviceContext.AddObject(tableName, playerEntity);
-            }
+            // Basically, calling the query later on will b0rk the service context
+            // therefore we should update it before
+            // but that can't be done before the player is saved to the db in the first place.
 
-            // And finally, save the changes
-            serviceContext.SaveChangesWithRetries();
+            // TL;DR DO NOT USE FOR UPDATING ANYTHING, IT WILL NOT WORK!
+
+            //serviceContext.UpdateObject(playerEntity);
+            //serviceContext.SaveChangesWithRetries();
+
+            // now this is the worst idea I've ever had. So fuck me.
+            // Salvage all the important data from the entity because otherwise the query will destroy it.
+            int currentSearchedTreasure = playerEntity.CurrentSearchedTreasure;
+            int route = playerEntity.CurrentRoute;
+            Dictionary<int, DateTime> treasureChest = playerEntity.TreasureChest;
+            Dictionary<string, DateTime> achievements = playerEntity.Achievements;
+
+            // then do the query.
+                // First, check if the entity exists in the database or not
+                //PlayerEntity checker = FindPlayerEntity(playerEntity);
+                PlayerEntity checker = FindPlayerEntity(playerEntity.PartitionKey, playerEntity.RowKey);
+                if (checker != null)
+                {
+                    // Just update the value
+                    checker.CurrentSearchedTreasure = currentSearchedTreasure;
+                    checker.CurrentRoute = route;
+                    checker.Achievements = achievements;
+                    checker.TreasureChest = treasureChest;
+                    serviceContext.UpdateObject(checker);
+                }
+                else
+                {
+                    // Otherwise, save the entity
+                    serviceContext.AddObject(tableName, playerEntity);
+                }
+
+                // And finally, save the changes
+                DataServiceResponse data = serviceContext.SaveChangesWithRetries();
         }
 
         /// <summary>
@@ -157,7 +179,7 @@ namespace LutExplorer.Helpers
                 IQueryable<PlayerEntity> listEntities = (from e in serviceContext.CreateQuery<PlayerEntity>(tableName)
                                                          where e.PartitionKey == playerType && e.RowKey == id
                                                          select e);
-
+                
                 if (listEntities.ToList().Count > 0)
                 {
                     return listEntities.FirstOrDefault();
@@ -172,6 +194,7 @@ namespace LutExplorer.Helpers
             }
 
         }
+
 
 
         public void TestAddPlayer()

@@ -13,14 +13,15 @@ namespace LutExplorer.Controllers
         private string cookieName = "LUTExplorerCookie";
         private string playerType = "PlayerType";
         private string playerId = "PlayerId";
-
+        
+        
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to ASP.NET MVC!";
-
+            
             // Create the cookie for the user in question
             CookieManager.Instance.CreateCookie(Response, Request);
-            
+
             return View();
         }
 
@@ -30,16 +31,41 @@ namespace LutExplorer.Controllers
         /// <returns>The view</returns>
         public ActionResult TestView()
         {
-                       
+            int pageNumber = 1;
+
             PlayerEntity playerEntity = CookieManager.Instance.GetPlayerAutomatically(Request);
+            GameManager gameManager = new GameManager();
 
-            // Bag the info for displaying on the browser
-            ViewBag.Message = "hai ";
+            // Get the page content...
+            // and bag the info for displaying on the browser
+            
+            Tuple<string,string,string,string> tuple = gameManager.getPageContent(playerEntity, playerEntity.CurrentSearchedTreasure);
+            ViewBag.Message = tuple.Item1;
+            ViewBag.Context = tuple.Item2;
+            ViewBag.Achievement = tuple.Item3;
+            ViewBag.clue = tuple.Item4;
+
+
+            // earlier debugging shit: 
+            //// get the context info for correct checkpoint or error for wrong one
+            //ViewBag.ContextInfo = gameManager.getPageContent(playerEntity, pageNumber);
+            //// check if player is at the correct checkpoint
+            //if(gameManager.CheckIfCorrectTreasure(playerEntity, pageNumber) ) {
+            //    // get the treasure, update player 
+            //    gameManager.GetTreasure(playerEntity, pageNumber);
+            //}         
+            // show the clue to the next checkpoint
+            // becuase GetTreasure updates player status, the next checkpoint will be the next checkpoint
+            //ViewBag.PageCLue = gameManager.getPageClue(playerEntity);
+
             // Modifying player info
-            DatabaseManager.Instance.SaveNextTreasure(playerEntity, 3);
-                        
-
+            //DatabaseManager.Instance.SaveNextTreasure(playerEntity, 3);
+            //gameManager.GetAchievement(playerEntity, "supermies");
+            //debugging progress, so incremnt page numbr
+            
+            
             // Return the view
+
             return View();
         }
 
@@ -84,6 +110,23 @@ namespace LutExplorer.Controllers
             // Bag the info for displaying on the browser
             ViewBag.Message = "Player " + playerEntity.RowKey + " Playing as " + playerEntity.PartitionKey + " player." +
                                "\nCurrently searching for treasure number " + playerEntity.CurrentSearchedTreasure.ToString();
+
+            ViewBag.Achievements = "";
+            if (playerEntity.Achievements != null )
+            {
+                foreach (KeyValuePair<string, DateTime> ach in playerEntity.Achievements)
+                {
+                    ViewBag.Achievements = ViewBag.Achievements + ", " + ach.Key;
+                }
+            }
+            if (playerEntity.TreasureChest != null)
+            {
+                ViewBag.Treasures = "";
+                foreach (KeyValuePair<int, DateTime> ach in playerEntity.TreasureChest)
+                {
+                    ViewBag.Treasures = ViewBag.Treasures + ", " + ach.Key.ToString();
+                }
+            }
 
 
 

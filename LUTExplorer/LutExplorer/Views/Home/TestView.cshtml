@@ -2,7 +2,14 @@
     ViewBag.Title = "TestView";
 }
 
-<h2>TestView</h2>
-<p>@ViewBag.Message</p>
 
-<h2>@ViewBag.Html</h2>
+<p>@Html.Raw(ViewBag.Message)</p>
+
+<p>
+    @Html.Raw(ViewBag.Context)
+    </p>
+
+<p>@Html.Raw(ViewBag.Achievement)</p>
+<h2>Seuraava rasti:</h2> 
+<br />
+@Html.Raw(ViewBag.Clue)
