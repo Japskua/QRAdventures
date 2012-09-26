@@ -306,6 +306,10 @@ namespace LutExplorer.Helpers
             // TODO: handlers for page reload and restardation
             // if pageNumber==998 restart game
 
+            // error handling in case shit hits fan and also for debugging
+
+            if (pageNumber == 999) return new Tuple<string, string, string, string>("", "", "", "");
+
             // player is at the right checkpoint
 
             // player has completed the game

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LutExplorer.Azure" generation="1" functional="0" release="0" Id="b52a0c23-d111-4f53-8e88-e7f8506d7a01" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="LutExplorer.Azure" generation="1" functional="0" release="0" Id="cb0b4bc7-8ff1-4dbf-a327-cbbd507813d5" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="LutExplorer.AzureGroup" generation="1" functional="0" release="0">
       <componentports>
@@ -79,9 +79,9 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="9dba5f85-2280-479d-8c66-aa5760ded696" ref="Microsoft.RedDog.Contract\ServiceContract\LutExplorer.AzureContract@ServiceDefinition.build">
+    <implementation Id="fa16b3ee-b3ed-49f9-8b09-0f5c1a5694f4" ref="Microsoft.RedDog.Contract\ServiceContract\LutExplorer.AzureContract@ServiceDefinition.build">
       <interfacereferences>
-        <interfaceReference Id="0a6015ea-09fb-4cf5-bbeb-47ac4faafd3a" ref="Microsoft.RedDog.Contract\Interface\LutExplorer:Endpoint1@ServiceDefinition.build">
+        <interfaceReference Id="6cdefba2-f0f4-4193-92e1-9bd4e8d83d69" ref="Microsoft.RedDog.Contract\Interface\LutExplorer:Endpoint1@ServiceDefinition.build">
           <inPort>
             <inPortMoniker name="/LutExplorer.Azure/LutExplorer.AzureGroup/LutExplorer:Endpoint1" />
           </inPort>

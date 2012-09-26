@@ -3,8 +3,8 @@
   <Role name="LutExplorer">
     <Instances count="1" />
     <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-      <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lutexplorerdb;AccountKey=gjGmrlagYWo1kIiOPwqxWgklKkh7uNVOROv+8o8TDByVnlTz8DjbWRuq4g+YPAbza8TcUDx4oDmCfhyWjnipPw==" />
+      <Setting name="StorageConnectionString" value="DefaultEndpointsProtocol=https;AccountName=lutexplorerdb;AccountKey=gjGmrlagYWo1kIiOPwqxWgklKkh7uNVOROv+8o8TDByVnlTz8DjbWRuq4g+YPAbza8TcUDx4oDmCfhyWjnipPw==" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

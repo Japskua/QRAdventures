@@ -13,16 +13,20 @@ namespace LutExplorer.Controllers
         private string cookieName = "LUTExplorerCookie";
         private string playerType = "PlayerType";
         private string playerId = "PlayerId";
-        
-        
+
+
         //public ActionResult Index()
         //{
         //    ViewBag.Message = "Welcome to ASP.NET MVC!";
 
-        //    ViewBag.header = Request.UrlReferrer;
+        //    ViewBag.Message = Request.Url;
 
         //    // Create the cookie for the user in question
         //    CookieManager.Instance.CreateCookie(Response, Request);
+
+        //    int pageNumber = RouteManager.getPageNumberFromRequest(Request);
+            
+        //    ViewBag.Context = pageNumber.ToString();
 
         //    return View();
         //}
@@ -41,25 +45,25 @@ namespace LutExplorer.Controllers
 
             // Create the cookie for the user in question
             CookieManager.Instance.CreateCookie(Response, Request);
-            
+
             // Get player stats from db
             PlayerEntity playerEntity = CookieManager.Instance.GetPlayerAutomatically(Request);
             // Start a game manageer instance
             GameManager gameManager = new GameManager();
 
             // get page number from redirect
-            //int pageNumber = RouteManager.getPageNumberFromRequest(Request);
-            int pageNumber = playerEntity.CurrentSearchedTreasure;
+            int pageNumber = RouteManager.getPageNumberFromRequest(Request);
+            //int pageNumber = playerEntity.CurrentSearchedTreasure;
 
             //  Get page content and bag it for view
             Tuple<string, string, string, string> tuple = gameManager.getPageContent(playerEntity, pageNumber);
             ViewBag.Message = tuple.Item1;
             ViewBag.Context = tuple.Item2;
             ViewBag.Achievement = tuple.Item3;
-            ViewBag.clue = tuple.Item4;
+            ViewBag.Clue = tuple.Item4;
 
 
-            
+
             // return the view and gtfo
             return View();
         }
