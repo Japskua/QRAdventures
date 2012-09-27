@@ -28,7 +28,7 @@ namespace LutExplorer.Helpers
                         else return 0;
                     case 2:
                         if (route1.Count != route1.FindIndex(i => i == current) + 1)
-                            return route2[route1.FindIndex(i => i == current) + 1];
+                            return route2[route2.FindIndex(i => i == current) + 1];
                         else return 0;
                     default:
                         return 0;
@@ -42,9 +42,20 @@ namespace LutExplorer.Helpers
             switch (route)
             {
                 case 1:
-                    return route1[route1.FindIndex(i => i == current) - 1];
+                    try
+                    {
+                        return route1[route1.FindIndex(i => i == current) - 1];
+                    }
+                    catch (Exception)
+                    {
+                        return 0;
+                    }
                 case 2:
-                    return route2[route1.FindIndex(i => i == current) + 1];
+                    try
+                    {
+                        return route2[route2.FindIndex(i => i == current) - 1];
+                    }
+                    catch (Exception) { return 0; }
                 default:
                     return 0;
             }
