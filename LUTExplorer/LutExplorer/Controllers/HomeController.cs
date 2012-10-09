@@ -43,6 +43,29 @@ namespace LutExplorer.Controllers
 
             ViewBag.header = Request.UrlReferrer;
 
+            // get page number from redirect
+            int pageNumber = RouteManager.getPageNumberFromRequest(Request);
+
+            // game restart
+            if (pageNumber == 998)
+            {
+                CookieManager.Instance.DeleteCookie(Request);
+
+                CookieManager.Instance.CreateCookie(Response, Request);
+
+                PlayerEntity pe = CookieManager.Instance.GetPlayerAutomatically(Request);
+                GameManager gm = new GameManager();
+                ViewBag.Achievement = gm.GetAchievement(pe, "restart");
+                
+                ViewBag.Message = "Round starts at the main lobby!";
+                ViewBag.Context = "";
+                
+                ViewBag.Clue = "";
+
+                return View();
+                
+            }
+            
             // Create the cookie for the user in question
             CookieManager.Instance.CreateCookie(Response, Request);
 
@@ -51,8 +74,7 @@ namespace LutExplorer.Controllers
             // Start a game manageer instance
             GameManager gameManager = new GameManager();
 
-            // get page number from redirect
-            int pageNumber = RouteManager.getPageNumberFromRequest(Request);
+
             //int pageNumber = playerEntity.CurrentSearchedTreasure;
 
             //  Get page content and bag it for view
@@ -63,6 +85,16 @@ namespace LutExplorer.Controllers
             ViewBag.Clue = tuple.Item4;
 
 
+            ViewBag.Badges = "";
+
+            if (playerEntity.Achievements != null && playerEntity.Achievements.Count() > 0)
+            {
+                ViewBag.Badges += "<h3>Your achievement badges:</h3><br />";
+                foreach (KeyValuePair<string, DateTime> n in playerEntity.Achievements)
+                {
+                    ViewBag.Badges += RouteManager.GetBadge(n.Key);
+                }
+            }
 
             // return the view and gtfo
             return View();

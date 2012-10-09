@@ -100,9 +100,9 @@ namespace LutExplorer.Helpers
         /// </summary>
         /// <param name="player">The player in question</param>
         /// <param name="achievement">The achievement gained</param>
-        public void GetAchievement(PlayerEntity player, string achievement)
+        public string GetAchievement(PlayerEntity player, string achievement)
         {
-            if (achievement == null) return;
+            if (achievement == null) return "";
             
             if (player.Achievements == null)
             {
@@ -119,8 +119,11 @@ namespace LutExplorer.Helpers
                 DatabaseManager.Instance.SavePlayer(player);
 
                 DatabaseManager.Instance.SaveAchievement(achievement, player);
+
+                return "Achievement unlocked: " + achievement + "<br />" + "<img src=\"../../Content/achievements/" +achievement + ".jpg\"> <br />" + GetAchievementDesc(achievement) ;
             }
 
+            return "";
         }
 
 
@@ -198,7 +201,7 @@ namespace LutExplorer.Helpers
             { 
 
                 case 0:
-                    return "Onneksi olkoon, pääsit maaliin!";
+                    return "Congratulations, you made it to the finish! <ul><li>For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\">Click here</a></li></ul>";
                 case 1:
                     return "Lähtöpaikka on pääaulassa";
                     
@@ -263,36 +266,49 @@ namespace LutExplorer.Helpers
         /// <param name="pageNumber">Page Number</param>
         /// <returns> NULL if no achievement, achievement name otherwise </returns>
 
-        public string GetAchievementFromNumber(int pageNumber)
+        public string GetAchievementFromNumber(int pageNumber, PlayerEntity player)
         {
 
             switch (pageNumber)
             {
 
                 case 1:
-                    return "ykkönen";
+                    return "doublestar";
                 case 2:
-                    return "kakkonen";
+                    return null;
                 case 3:
                     return null;
                 case 4:
-                    return null;
+                    return "idea";
                 case 5:
-                    return null;
+                    return "kunniamerkki";
                 case 6:
+
+                    if (RouteManager.CheckTimeAchievements(6, 1, 60, player) )
+                        return "speedy";
                     return null;
                 case 7:
                     return null;
                 case 8:
                     return null;
                 case 9:
-                    return null;
+                    return "kaukoputki";
                 case 10:
                     return null;
             }
             return null;
         }
 
+        public string GetAchievementDesc(string name)
+        {
+            switch (name)
+            {
+                case "speedy":
+                    return "You beat the target time to reach checkpoint number 6!";
+            }
+            return "";
+        }
+        
         /// <summary>
         /// The only method that needs to be called outside this class itself
         /// Works out what content needs to be on the page and returns it in a tuple.
@@ -304,7 +320,15 @@ namespace LutExplorer.Helpers
         public Tuple<string,string,string,string> getPageContent(PlayerEntity player, int pageNumber)
         {
             // TODO: handlers for page reload and restardation
-            // if pageNumber==998 restart game
+            // if pageNumber==XX restart game = delete cookie from browser
+            // restart done in the controller, so sue me. Fuck me silly IDGAF!
+            
+            // making the "are you sure to restart"-feature
+
+            if (pageNumber == 924)
+            {
+                return new Tuple<string, string, string, string>("Are you sure to restart?", "For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "");
+            }
 
             // error handling in case shit hits fan and also for debugging
 
@@ -315,9 +339,9 @@ namespace LutExplorer.Helpers
             // player has completed the game
             if (player.CurrentSearchedTreasure == 0)
             {
-                player.CurrentSearchedTreasure = 1;
-                DatabaseManager.Instance.SavePlayer(player);
-                return new Tuple<string, string, string, string>("Olet jo päässyt pelin läpi! <br>Aloita uusi kierros pääaulasta.", "", "", "");
+                //player.CurrentSearchedTreasure = 1;
+                //DatabaseManager.Instance.SavePlayer(player);
+                return new Tuple<string, string, string, string>("You've finished the game! For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "", "");
             }
 
             if (player.CurrentSearchedTreasure == pageNumber)
@@ -332,22 +356,26 @@ namespace LutExplorer.Helpers
                 switch (player.PartitionKey)
                 {
                     case "Regular":
-                        return new Tuple<string, string, string, string>("Löysit rastin!", "", "",  getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)) );
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        return new Tuple<string, string, string, string>("You found the checkpoint!", "", "",  getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)) );
                         
                     case "Achievements":
                         // GET achievement here
-                        GetAchievement(player, GetAchievementFromNumber(pageNumber));
+                        
                         //return content
-                        return new Tuple<string, string, string, string>("Löysit rastin!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        return new Tuple<string, string, string, string>("You found the checkpoint!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     
                     case "Context":
-                        return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     
                     case "ContextAchievements":
                         // GET achievement here
-                        GetAchievement(player, GetAchievementFromNumber(pageNumber));
 
-                        return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     default:
                         return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
                 }
@@ -367,12 +395,22 @@ namespace LutExplorer.Helpers
                 if (pageNumber == 1) // does the player just want to start over?
                 {
                     // TODO: add a link to reload page
-                    return new Tuple<string, string, string, string>("Olet väärällä rastilla. Vai aloitetaanko uusi kierros?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    return new Tuple<string, string, string, string>("Back in the main hall. Would you like to start again?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
                 }
 
-                // Get explorer achievement
 
-                return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure) );
+                // otherwise Get explorer achievement
+                if (player.PartitionKey == PlayerEntity.UserType.Achievements.ToString() || player.PartitionKey== PlayerEntity.UserType.ContextAchievements.ToString() )
+                {
+                    if (player.CurrentSearchedTreasure == 1)
+                        return new Tuple<string, string, string, string>("Welcome to LUT Explorer - The Game!", "The Game starts from the Main Lobby of the University", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                    else
+                        return new Tuple<string, string, string, string>("You're at the wrong checkpoint", " ", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                }
+                else
+                {
+                    return new Tuple<string, string, string, string>("You're at the wrong checkpoint", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                }
             }
         }
 

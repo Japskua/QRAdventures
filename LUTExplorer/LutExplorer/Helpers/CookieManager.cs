@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using LutExplorer.Helpers.DatabaseEntities;
 
+
+
 namespace LutExplorer.Helpers
 {
     /// <summary>
@@ -203,6 +205,14 @@ namespace LutExplorer.Helpers
         public PlayerEntity GetPlayerAutomatically(HttpRequestBase request)
         {
             return GetPlayerFromCookie(GetCookie(request));
+        }
+
+
+        public bool DeleteCookie(HttpRequestBase request)
+        {
+            request.Cookies.Remove(cookieName);
+            
+            return true;
         }
 
         #endregion Functions

@@ -51,11 +51,17 @@ namespace LutExplorer.Helpers
 
 
             // dividing players into four groups
-            if (number < 26) return PlayerEntity.UserType.Regular;
-            else if (number < 51) return PlayerEntity.UserType.Achievements;
-            else if (number < 76) return PlayerEntity.UserType.Context;
-            else return PlayerEntity.UserType.ContextAchievements;
+            //if (number < 26) return PlayerEntity.UserType.Regular;
+            //else if (number < 51) return PlayerEntity.UserType.Achievements;
+            //else if (number < 76) return PlayerEntity.UserType.Context;
+            //else return PlayerEntity.UserType.ContextAchievements;
+            
+            // debug for achievements
+            return PlayerEntity.UserType.Achievements;
+        
         }
+
+
 
         /// <summary>
         /// Creates the player ID for the player randomly, 
