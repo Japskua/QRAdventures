@@ -11,7 +11,7 @@ namespace LutExplorer.Helpers
 {
     public static class RouteManager
     {
-        private static List<int> route1 = new List<int>(new int[] {1,2,3,4,5,6,7,8,9,10,11,12,13});
+        private static List<int> route1 = new List<int>(new int[] {1, 13, 7, 10, 5, 2, 3, 6, 4, 11, 12, 9});
         
         private static List<int> route2 = new List<int>(new int[] { 1, 3, 5, 7, 9 });
 
@@ -116,7 +116,7 @@ namespace LutExplorer.Helpers
         }
         /// <summary>
         /// Datetime comparison for time achievements.
-        /// takes first chekpoint, 2nd checkpoint, allowed difference in minutes and player entity
+        /// t1 is subtracted from t2 (t2-t1). allowed difference in minutes and player entity
         /// </summary>
         /// <param name="t1"></param>
         /// <param name="t2"></param>

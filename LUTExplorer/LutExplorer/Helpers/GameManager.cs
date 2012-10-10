@@ -109,6 +109,22 @@ namespace LutExplorer.Helpers
                 player.Achievements = new Dictionary<string, DateTime>();
             }
 
+            // special case for the explorer and time based achievement(s)
+
+            if (achievement == "explorer" && player.Achievements.ContainsKey(achievement))
+            {
+                return GetAchievement(player, "superExplorer");
+            }
+
+            if (achievement == "speedy" && player.Achievements.ContainsKey(achievement))
+            {
+                if (!player.Achievements.ContainsKey("superSpeedy"))
+                    return GetAchievement(player, "superSpeedy");
+                else return GetAchievement(player, "hyperSpeedy");
+            }
+
+            // now regular achievements
+
             // Check if the player does not have the treasure yet
             if (!player.Achievements.ContainsKey(achievement))
             {
@@ -141,27 +157,30 @@ namespace LutExplorer.Helpers
                         return "<iframe width=420 height=315 src=http://www.youtube.com/embed/SHj153yFDg4 frameborder=0 allowfullscreen></iframe>"
                             + "";
                     case 2:
-                        return "Ohjelmistotekniikan professori Kari Smolander tunnetaan myös Alice in Wasteland -yhtyeen kitaristina. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
+                        return "Kari Smolander, Professor in Software engineering, is also known for being the guitarist of Alice in Wasteland. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
+                        //return "Ohjelmistotekniikan professori Kari Smolander tunnetaan myös Alice in Wasteland -yhtyeen kitaristina. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
                     case 3:
                         return "";
                     case 4:
-                        return "Tietotekniikan osasto muutti pois 6-vaiheen yläkerroksista jo keväällä 2011, mutta kyltti jäi.";
+                        return "Department of Information Technology moved from this building in 2011 but the sign remains in place.";
+                        //return "Tietotekniikan osasto muutti pois 6-vaiheen yläkerroksista jo keväällä 2011, mutta kyltti jäi.";
                     case 5:
                         return "";
                     case 6:
                         return "Kukaan ei tarkalleen tiedä, mitä nuo puukoristeet seinällä mahtavat esittää.";
                     case 7:
-                        return "Tässä vitriinissä ei ole koskaan ollut mitään sisällä.";
+                        return "For as long as the developers of LUT Explorer have been around LUT there has never been anything on display in this glass cabinet";
                     case 8:
                         return "";
                     case 9:
-                        return "Kaukoputkesta voi tarkastella vaikkapa LUTin vihreää tuulimyllyä lähemmin!";
+                        return "With the telescope you can check out the green windmill up close.";
+                        //return "Kaukoputkesta voi tarkastella vaikkapa LUTin vihreää tuulimyllyä lähemmin!";
                     case 10:
-                        return "Näytöön kiinnitetyn web-kameran avulla voit vaikkapa skypettää Kiinaan!";
+                        return "You could make a Skype call anywhere in the world using that screen mounted web camera.";
                     case 11:
-                        return "Monen kauppatieteilijän mielestä tämä on paras näköalapaikka.";
+                        return "Many business students claim this is the best view of the whole campus area. It's hard to disagree, isn't it.";
                     case 12:
-                        return "Ylioppilastalo Oy:n veppikioski on otettu käyttöön 12.4.2008";
+                        return "Student union building's internet kiosk, taken into use April 12th 2008";
                     case 13:
                         return "";
                     case 14:
@@ -203,56 +222,56 @@ namespace LutExplorer.Helpers
                 case 0:
                     return "Congratulations, you made it to the finish! <ul><li>For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\">Click here</a></li></ul>";
                 case 1:
-                    return "Lähtöpaikka on pääaulassa";
+                    return "";
                     
                 case 2:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Etsimäsi rasti sijaitsee Tietotekniikan osastolla\";}"
-                        +"</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>"; 
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"The next QR Code is at the IT department\";}"
+                        +"</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>"; 
                     
                 case 3:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 4:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 5:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/"+ number+"/h.jpg>\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>"; 
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/"+ number+"/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>"; 
                 case 6:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 7:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 8:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee 1-vaiheessa.\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 9:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee 1-vaiheessa.\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"This QR code is somewhere in Phase 1.\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 10:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee yhden 7-vaiheen hissin liepeillä.\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"This QR-code is near a lift in phase 7.\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 11:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg width=40%>\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=tip()><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg width=40%>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=tip()><p class=\"hint\">Give me a hint</p></a></p>";
                 case 12:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Olet matkalla ylioppilastalolle.\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"You're heading for the student union building.\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 13:
-                    return "<script>function tip(){document.getElementById(\"tip\").innerHTML=\"Suuntaa kohti kielikeskusta..\";}"
-                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=\"tip()\"><h2>anna vihje</h2></a></p>";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Point your nose towards LUT Language Centre..\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 14:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 15:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 16:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 17:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 18:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 19:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 20:
-                    return "<img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
 
                 default:
                     return ""; 
@@ -269,34 +288,45 @@ namespace LutExplorer.Helpers
         public string GetAchievementFromNumber(int pageNumber, PlayerEntity player)
         {
 
-            switch (pageNumber)
+            if (player.CurrentRoute == 1)
             {
+                switch (pageNumber)
+                {
 
-                case 1:
-                    return "doublestar";
-                case 2:
-                    return null;
-                case 3:
-                    return null;
-                case 4:
-                    return "idea";
-                case 5:
-                    return "kunniamerkki";
-                case 6:
-
-                    if (RouteManager.CheckTimeAchievements(6, 1, 60, player) )
-                        return "speedy";
-                    return null;
-                case 7:
-                    return null;
-                case 8:
-                    return null;
-                case 9:
-                    return "kaukoputki";
-                case 10:
-                    return null;
+                    case 1:
+                        return null;
+                    case 2:
+                        if (RouteManager.CheckTimeAchievements(2, 1, 16, player))
+                            return "speedy";
+                        return null;
+                    case 3:
+                        return "halfway";
+                    case 4:
+                        if (RouteManager.CheckTimeAchievements(4, 1, 23, player))
+                            return "speedy";
+                        return null;
+                    case 5:
+                        return null;
+                    case 6:
+                        return null;
+                    case 7:
+                        return null;
+                    case 8:
+                        return null;
+                    case 9:
+                        return "telescope";
+                    case 10:
+                        if (RouteManager.CheckTimeAchievements(10, 1, 9, player))
+                            return "speedy";
+                        return null;
+                    case 13:
+                        if (RouteManager.CheckTimeAchievements(13, 1, 5, player))
+                            return "speedy";
+                        return null;
+                }
+                return null;
             }
-            return null;
+            else return null;
         }
 
         public string GetAchievementDesc(string name)
@@ -304,8 +334,13 @@ namespace LutExplorer.Helpers
             switch (name)
             {
                 case "speedy":
-                    return "You beat the target time to reach checkpoint number 6!";
+                    return "You are quick to think on your feet! You beat the target time to reach this checkpoint!";
+                case "superSpeedy":
+                    return "Wow, you're as fast as the wind!";
+                case "hyperSpeedy":
+                    return "Faster than lighning dude!";
             }
+
             return "";
         }
         
@@ -356,25 +391,25 @@ namespace LutExplorer.Helpers
                 switch (player.PartitionKey)
                 {
                     case "Regular":
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                         return new Tuple<string, string, string, string>("You found the checkpoint!", "", "",  getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)) );
                         
                     case "Achievements":
                         // GET achievement here
                         
                         //return content
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                         return new Tuple<string, string, string, string>("You found the checkpoint!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     
                     case "Context":
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                         return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     
                     case "ContextAchievements":
                         // GET achievement here
 
 
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                         return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                     default:
                         return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
