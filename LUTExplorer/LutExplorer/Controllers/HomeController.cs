@@ -85,7 +85,7 @@ namespace LutExplorer.Controllers
             ViewBag.Clue = tuple.Item4;
 
 
-            ViewBag.Badges = "";
+            ViewBag.Badges = "<table><tr><td>";
 
             if (playerEntity.Achievements != null && playerEntity.Achievements.Count() > 0)
             {
@@ -99,7 +99,7 @@ namespace LutExplorer.Controllers
                 }
 
             }
-
+            ViewBag.Badges += "</td></tr></table>";
             // return the view and gtfo
             return View();
         }

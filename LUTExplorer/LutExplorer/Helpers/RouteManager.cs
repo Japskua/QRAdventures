@@ -159,6 +159,8 @@ namespace LutExplorer.Helpers
                     return "Curious of ALL the QR codes? Well well, we have a true adventurer here...";
                 case "telescope":
                     return "Congratulations, you've found the (hidden in plain sight) telescope!";
+                case "superExplorer":
+                    return "Well done, you keep finding our QR codes everywhere... <br />but not always the right ones.";
             }
 
             return "";
