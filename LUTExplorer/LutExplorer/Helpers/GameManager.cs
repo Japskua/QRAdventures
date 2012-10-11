@@ -136,7 +136,7 @@ namespace LutExplorer.Helpers
 
                 DatabaseManager.Instance.SaveAchievement(achievement, player);
 
-                return "Achievement unlocked: " + achievement + "<br />" + "<img src=\"../../Content/achievements/" +achievement + ".jpg\"> <br />" + GetAchievementDesc(achievement) ;
+                return "Achievement unlocked: " + achievement + "<br />" + "<img src=\"../../Content/achievements/" +achievement + ".jpg\"> <br />" + RouteManager.GetAchievementDesc(achievement) ;
             }
 
             return "";
@@ -154,8 +154,8 @@ namespace LutExplorer.Helpers
                 switch (treasure)
                 {
                     case 1:
-                        return "<iframe width=420 height=315 src=http://www.youtube.com/embed/SHj153yFDg4 frameborder=0 allowfullscreen></iframe>"
-                            + "";
+                        return "Did you know that ... <br />"
+                            + "The main building as it is now was built in 1999-2000. The architecture is the result of a design competition.";
                     case 2:
                         return "Kari Smolander, Professor in Software engineering, is also known for being the guitarist of Alice in Wasteland. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
                         //return "Ohjelmistotekniikan professori Kari Smolander tunnetaan myös Alice in Wasteland -yhtyeen kitaristina. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
@@ -167,7 +167,8 @@ namespace LutExplorer.Helpers
                     case 5:
                         return "";
                     case 6:
-                        return "Kukaan ei tarkalleen tiedä, mitä nuo puukoristeet seinällä mahtavat esittää.";
+                        return "Can you guess what the wooden ornaments on the wall depict?";
+                        //return "Kukaan ei tarkalleen tiedä, mitä nuo puukoristeet seinällä mahtavat esittää.";
                     case 7:
                         return "For as long as the developers of LUT Explorer have been around LUT there has never been anything on display in this glass cabinet";
                     case 8:
@@ -329,20 +330,7 @@ namespace LutExplorer.Helpers
             else return null;
         }
 
-        public string GetAchievementDesc(string name)
-        {
-            switch (name)
-            {
-                case "speedy":
-                    return "You are quick to think on your feet! You beat the target time to reach this checkpoint!";
-                case "superSpeedy":
-                    return "Wow, you're as fast as the wind!";
-                case "hyperSpeedy":
-                    return "Faster than lighning dude!";
-            }
 
-            return "";
-        }
         
         /// <summary>
         /// The only method that needs to be called outside this class itself
@@ -376,7 +364,7 @@ namespace LutExplorer.Helpers
             {
                 //player.CurrentSearchedTreasure = 1;
                 //DatabaseManager.Instance.SavePlayer(player);
-                return new Tuple<string, string, string, string>("You've finished the game! For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "", "");
+                return new Tuple<string, string, string, string>("You've finished the game!", " For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "");
             }
 
             if (player.CurrentSearchedTreasure == pageNumber)

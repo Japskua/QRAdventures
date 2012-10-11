@@ -92,8 +92,12 @@ namespace LutExplorer.Controllers
                 ViewBag.Badges += "<h3>Your achievement badges:</h3><br />";
                 foreach (KeyValuePair<string, DateTime> n in playerEntity.Achievements)
                 {
+                    ViewBag.Badges += "<table><tr><td>";
                     ViewBag.Badges += RouteManager.GetBadge(n.Key);
+                    ViewBag.Badges += "</td></tr><tr><td>" + n.Key;
+                    ViewBag.Badges += "</td></tr></table>";
                 }
+
             }
 
             // return the view and gtfo

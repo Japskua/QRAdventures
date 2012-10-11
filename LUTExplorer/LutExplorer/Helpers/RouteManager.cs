@@ -136,6 +136,33 @@ namespace LutExplorer.Helpers
             return false;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+
+        public static string GetAchievementDesc(string name)
+        {
+            switch (name)
+            {
+                case "speedy":
+                    return "You are quick to think on your feet! You beat the target time to reach this checkpoint!";
+                case "superSpeedy":
+                    return "Wow, you're as fast as the wind!";
+                case "hyperSpeedy":
+                    return "Faster than lighning dude!";
+                case "halfway":
+                    return "You're well past halfway! Keep up the good pace!";
+                case "explorer":
+                    return "Curious of ALL the QR codes? Well well, we have a true adventurer here...";
+                case "telescope":
+                    return "Congratulations, you've found the (hidden in plain sight) telescope!";
+            }
+
+            return "";
+        }
         //end class
     }
 
