@@ -33,6 +33,7 @@ namespace LutExplorer.Helpers
         {
             // Retrieve the storage account from the connection string
             storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            
 
             // Create the table client
             tableClient = storageAccount.CreateCloudTableClient();

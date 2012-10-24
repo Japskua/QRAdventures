@@ -45,6 +45,8 @@ namespace LutExplorer.Controllers
 
             // get page number from redirect
             int pageNumber = RouteManager.getPageNumberFromRequest(Request);
+            // helper
+            int i;
 
             // game restart
             if (pageNumber == 998)
@@ -63,7 +65,6 @@ namespace LutExplorer.Controllers
                 ViewBag.Clue = "";
 
                 return View();
-                
             }
             
             // Create the cookie for the user in question
@@ -74,6 +75,20 @@ namespace LutExplorer.Controllers
             // Start a game manageer instance
             GameManager gameManager = new GameManager();
 
+            // handling route selection
+
+            if (pageNumber == 901)
+            {
+                playerEntity.CurrentRoute = 1;
+                DatabaseManager.Instance.SavePlayer(playerEntity);
+                pageNumber = 1;
+            }
+            if (pageNumber == 902)
+            {
+                playerEntity.CurrentRoute = 2;
+                DatabaseManager.Instance.SavePlayer(playerEntity);
+                pageNumber = 1;
+            }
 
             //int pageNumber = playerEntity.CurrentSearchedTreasure;
 
@@ -85,17 +100,33 @@ namespace LutExplorer.Controllers
             ViewBag.Clue = tuple.Item4;
 
 
-            ViewBag.Badges = "<table><tr><td>";
+            
 
             if (playerEntity.Achievements != null && playerEntity.Achievements.Count() > 0)
             {
+
                 ViewBag.Badges += "<h3>Your achievement badges:</h3><br />";
+                ViewBag.Badges += "<table><tr><td>";
+                i = 0;
                 foreach (KeyValuePair<string, DateTime> n in playerEntity.Achievements)
                 {
+
                     ViewBag.Badges += "<table><tr><td>";
                     ViewBag.Badges += RouteManager.GetBadge(n.Key);
-                    ViewBag.Badges += "</td></tr><tr><td>" + n.Key;
-                    ViewBag.Badges += "</td></tr></table>";
+                    ViewBag.Badges += "</td></tr><tr><td>" + n.Key + "</td></tr></table>";
+
+                    if (i % 2 == 0 && i != 0)
+                    {
+                        ViewBag.Badges += "</td></tr><tr><td>";
+                        i = 0;
+                    }
+
+                    else
+                    {
+                        ViewBag.Badges += "</td><td>";
+                    }
+
+                    i++;
                 }
 
             }

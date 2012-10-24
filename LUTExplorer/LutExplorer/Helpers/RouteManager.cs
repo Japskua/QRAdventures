@@ -13,7 +13,7 @@ namespace LutExplorer.Helpers
     {
         private static List<int> route1 = new List<int>(new int[] {1, 13, 7, 10, 5, 2, 3, 6, 4, 11, 12, 9});
         
-        private static List<int> route2 = new List<int>(new int[] { 1, 3, 5, 7, 9 });
+        private static List<int> route2 = new List<int>(new int[] { 1, 15, 6, 8, 16});
 
         
         
