@@ -136,7 +136,10 @@ namespace LutExplorer.Helpers
 
                 DatabaseManager.Instance.SaveAchievement(achievement, player);
 
-                return "Achievement unlocked: " + achievement + "<br />" + "<img src=\"../../Content/achievements/" +achievement + ".jpg\"> <br />" + RouteManager.GetAchievementDesc(achievement) ;
+                if (player.Lang == 1) 
+                return "Achievement unlocked: " + achievement + "<br />" + "<img src=\"../../Content/achievements/" +achievement + ".jpg\"> <br />" + RouteManager.GetAchievementDescEng(achievement) ;
+                else // lang = 2
+                return "Achievement unlocked: " + achievement + "<br />" + "<img src=\"../../Content/achievements/" + achievement + ".jpg\"> <br />" + RouteManager.GetAchievementDescFin(achievement);
             }
 
             return "";
@@ -342,108 +345,262 @@ namespace LutExplorer.Helpers
         /// <returns>All of the necessary page content in a string, string, string, string -type Tuple</returns>
         public Tuple<string,string,string,string> getPageContent(PlayerEntity player, int pageNumber)
         {
-            // if pageNumber==XX restart game = delete cookie from browser
-            // restart done in the controller, so sue me. Fuck me silly IDGAF!
-            
-            // making the "are you sure to restart"-feature
+            // this is the worst way to do shit :|
 
-            if (pageNumber == 924)
+            if (player.Lang == 1) // lang = eng
             {
-                return new Tuple<string, string, string, string>("Are you sure to restart?", "For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a> <br /> <a href=\"http://lutexplorer.cloudapp.net/?p=" + Convert.ToString((RouteManager.getPrevious(player.CurrentRoute,player.CurrentSearchedTreasure)*1024+7) ) + "v\">Back to game</a>" , "", "");
-            }
 
-            // error handling in case shit hits fan and also for debugging
+                // if pageNumber==XX restart game = delete cookie from browser
+                // restart done in the controller, so sue me. Fuck me silly IDGAF!
 
-            if (pageNumber == 999) return new Tuple<string, string, string, string>("", "", "", "");
+                // making the "are you sure to restart"-feature
 
-            // player is at the right checkpoint
-
-            // player has completed the game
-            if (player.CurrentSearchedTreasure == 0)
-            {
-                //player.CurrentSearchedTreasure = 1;
-                //DatabaseManager.Instance.SavePlayer(player);
-                return new Tuple<string, string, string, string>("You've finished the game!", " For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "");
-            }
-
-            if (player.CurrentSearchedTreasure == pageNumber)
-            {
-                
-                // you can has treasure
-                // my precious
-                GetTreasure(player, pageNumber);
-                
-                
-                //what is the player's type?
-                switch (player.PartitionKey)
+                if (pageNumber == 924)
                 {
-                    case "Regular":
-                        // if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", "", "");
-                        return new Tuple<string, string, string, string>("You found the checkpoint!", "", "",  getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)) );
-                        
-                    case "Achievements":
-                        // GET achievement here
-                        
-                        //return content
-                        //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
-
-                        return new Tuple<string, string, string, string>("You found the checkpoint!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                    
-                    case "Context":
-                        //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", "", "");
-
-                        return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                    
-                    case "ContextAchievements":
-                        // GET achievement here
-
-
-                        //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                        if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
-
-                        return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                    default:
-                        return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
+                    return new Tuple<string, string, string, string>("Are you sure to restart?", "For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a> <br /> <a href=\"http://lutexplorer.cloudapp.net/?p=" + Convert.ToString((RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure) * 1024 + 7)) + "v\">Back to game</a>", "", "");
                 }
-            }
-            
-                //if this is just a page reload
-            else if (pageNumber == RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure) ) {
 
-                // if player gets achievements, get reload achievement 
+                // error handling in case shit hits fan and also for debugging
 
-                return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
-            }
+                if (pageNumber == 999) return new Tuple<string, string, string, string>("", "", "", "");
 
-             // player is at the wrong checkpoint
-            else
-            {
-                if (pageNumber == 1) // does the player just want to start over?
+                // player is at the right checkpoint
+
+                // player has completed the game
+                if (player.CurrentSearchedTreasure == 0)
                 {
-                    // TODO: add a link to reload page
-                    return new Tuple<string, string, string, string>("Back in the main hall. Would you like to start again?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    //player.CurrentSearchedTreasure = 1;
+                    //DatabaseManager.Instance.SavePlayer(player);
+                    return new Tuple<string, string, string, string>("You've finished the game!", " For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "");
                 }
 
 
-                // otherwise Get explorer achievement
-                if (player.PartitionKey == PlayerEntity.UserType.Achievements.ToString() || player.PartitionKey== PlayerEntity.UserType.ContextAchievements.ToString() )
+
+
+                if (player.CurrentSearchedTreasure == pageNumber)
                 {
-                    if (player.CurrentSearchedTreasure == 1)
-                        return new Tuple<string, string, string, string>("Welcome to LUT Explorer - The Game!", "The Game starts from the Main Lobby of the University", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
-                    else
-                        return new Tuple<string, string, string, string>("You're at the wrong checkpoint", " ", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+
+                    // you can has treasure
+                    // my precious
+                    GetTreasure(player, pageNumber);
+
+
+                    //what is the player's type?
+                    switch (player.PartitionKey)
+                    {
+                        case "Regular":
+                            // if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", "", "");
+                            return new Tuple<string, string, string, string>("You found the checkpoint!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        case "Achievements":
+                            // GET achievement here
+
+                            //return content
+                            //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+
+                            return new Tuple<string, string, string, string>("You found the checkpoint!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        case "Context":
+                            //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", "", "");
+
+                            return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        case "ContextAchievements":
+                            // GET achievement here
+
+
+                            //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+
+                            return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        default:
+                            return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
+                    }
                 }
+
+                    //if this is just a page reload
+                else if (pageNumber == RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure))
+                {
+
+                    // if player gets achievements, get reload achievement 
+
+                    if (pageNumber == 1) // does the player just want to start over?
+                    {
+                        // TODO: add a link to reload page
+                        return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                    }
+
+                    return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                }
+
+                 // player is at the wrong checkpoint
                 else
                 {
-                    return new Tuple<string, string, string, string>("You're at the wrong checkpoint", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
-                }
-            }
-        }
+                    if (pageNumber == 1) // does the player just want to start over?
+                    {
+                        // TODO: add a link to reload page
+                        return new Tuple<string, string, string, string>("Back in the main hall. Would you like to start again?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    }
 
+
+                    // otherwise Get explorer achievement
+                    if (player.PartitionKey == PlayerEntity.UserType.Achievements.ToString() || player.PartitionKey == PlayerEntity.UserType.ContextAchievements.ToString())
+                    {
+                        if (player.CurrentSearchedTreasure == 1)
+                            return new Tuple<string, string, string, string>("Welcome to LUT Explorer - The Game!", "The Game starts from the Main Lobby of the University", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                        else
+                            return new Tuple<string, string, string, string>("You're at the wrong checkpoint", " ", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                    }
+                    else
+                    {
+                        return new Tuple<string, string, string, string>("You're at the wrong checkpoint", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    }
+                }
+
+            } // LANG END
+
+
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // lang change !!
+
+            else // then lang = fin
+            {
+                // if pageNumber==XX restart game = delete cookie from browser
+                // restart done in the controller, so sue me. Fuck me silly IDGAF!
+
+                // making the "are you sure to restart"-feature
+
+                if (pageNumber == 924)
+                {
+                    return new Tuple<string, string, string, string>("Haluatko varmasti käynnistää pelin uudelleen?", "<a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Uudelle kierrokselle</a> <br /> <a href=\"http://lutexplorer.cloudapp.net/?p=" + Convert.ToString((RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure) * 1024 + 7)) + "v\">Takaisin peliin</a>", "", "");
+                }
+
+                // error handling in case shit hits fan and also for debugging
+
+                if (pageNumber == 999) return new Tuple<string, string, string, string>("", "", "", "");
+
+                // player is at the right checkpoint
+
+                // player has completed the game
+                if (player.CurrentSearchedTreasure == 0)
+                {
+                    //player.CurrentSearchedTreasure = 1;
+                    //DatabaseManager.Instance.SavePlayer(player);
+                    return new Tuple<string, string, string, string>("Pääsit maaliin!", "<a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Uudelle kierrokselle</a>", "", "");
+                }
+
+
+
+
+                if (player.CurrentSearchedTreasure == pageNumber)
+                {
+
+                    // you can has treasure
+                    // my precious
+                    GetTreasure(player, pageNumber);
+
+
+                    //what is the player's type?
+                    switch (player.PartitionKey)
+                    {
+                        case "Regular":
+                            // if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", "", "");
+                            return new Tuple<string, string, string, string>("Löysit rastin!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        case "Achievements":
+                            // GET achievement here
+
+                            //return content
+                            //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+
+                            return new Tuple<string, string, string, string>("Löysit rastin!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        case "Context":
+                            //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", "", "");
+
+                            return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+
+                        case "ContextAchievements":
+                            // GET achievement here
+
+
+                            //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+
+                            return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                        default:
+                            return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
+                    }
+                }
+
+                    //if this is just a page reload
+                else if (pageNumber == RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure))
+                {
+
+                    // if player gets achievements, get reload achievement 
+
+                    if (pageNumber == 1) // does the player just want to start over?
+                    {
+                        // TODO: add a link to reload page
+                        return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                    }
+
+                    return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                }
+
+                 // player is at the wrong checkpoint
+                else
+                {
+                    if (pageNumber == 1) // does the player just want to start over?
+                    {
+                        // TODO: add a link to reload page
+                        return new Tuple<string, string, string, string>("Aulassa taas... Haluatko aloittaa alusta?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    }
+
+
+                    // otherwise Get explorer achievement
+                    if (player.PartitionKey == PlayerEntity.UserType.Achievements.ToString() || player.PartitionKey == PlayerEntity.UserType.ContextAchievements.ToString())
+                    {
+                        if (player.CurrentSearchedTreasure == 1)
+                            return new Tuple<string, string, string, string>("LUT Explorer - The Game!", "Peli alkaa yliopiston pääaulasta", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                        else
+                            return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                    }
+                    else
+                    {
+                        return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    }
+                }
+            } // LANG END
+
+        }  // method end
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns>player's total time between chekpoints</returns>
+
+        public string GetPlayTime(PlayerEntity player)
+        {
+
+            if (player.CurrentSearchedTreasure == 1) return "";
+            if (RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure) == 1) return "";
+
+            return "Your recorded time on route is " + Convert.ToInt32(player.TreasureChest[RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure)].Subtract(player.TreasureChest[1]).TotalMinutes).ToString() + " minutes.";
+            
+            
+
+        } //method ends
 
         
-    }
-}
+    } // class end
+} // namespace ends

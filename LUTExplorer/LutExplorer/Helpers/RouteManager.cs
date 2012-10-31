@@ -143,7 +143,7 @@ namespace LutExplorer.Helpers
         /// <param name="name"></param>
         /// <returns></returns>
 
-        public static string GetAchievementDesc(string name)
+        public static string GetAchievementDescEng(string name)
         {
             switch (name)
             {
@@ -161,6 +161,30 @@ namespace LutExplorer.Helpers
                     return "Congratulations, you've found the (hidden in plain sight) telescope!";
                 case "superExplorer":
                     return "Well done, you keep finding our QR codes everywhere... <br />but not always the right ones.";
+            }
+
+            return "";
+        }
+        //end class
+
+        public static string GetAchievementDescFin(string name)
+        {
+            switch (name)
+            {
+                case "speedy":
+                    return "Nopeaa toimintaa! Löysit rastin keskimääräistä nopeammin!";
+                case "superSpeedy":
+                    return "Vau, olet tuultakin nopeampi!";
+                case "hyperSpeedy":
+                    return "Speedy Gonzaleskin kalpenee vauhtisi rinnalla!!";
+                case "halfway":
+                    return "Ohitit jo puolenvälin! Jatka samaan malliin";
+                case "explorer":
+                    return "Löysit QR-koodin... mutta väärältä rastilta.";
+                case "telescope":
+                    return "Katso, mitä kaukoputkesta näkyy...!";
+                case "superExplorer":
+                    return "Sinähän löydät QR-koodeja kaikkialta... ";
             }
 
             return "";

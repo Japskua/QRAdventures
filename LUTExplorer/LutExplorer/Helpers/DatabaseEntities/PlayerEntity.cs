@@ -36,12 +36,13 @@ namespace LutExplorer.Helpers.DatabaseEntities
             this.PartitionKey = userType.ToString();
             this.RowKey = userId.ToString();
 
-            // Create the basic values
+            // Create the default values
             TreasureChest = new Dictionary<int, DateTime>();
             Achievements = new Dictionary<string, DateTime>();
             
             CurrentSearchedTreasure = 1;
             CurrentRoute = 1;
+            Lang = 2;
 
 
         }
@@ -69,5 +70,7 @@ namespace LutExplorer.Helpers.DatabaseEntities
         /// has gained and when
         /// </summary>
         public Dictionary<string, DateTime> Achievements { get; set; }
+
+        public int Lang { get; set; } // 1 = english, 2 = Finnish
     }
 }

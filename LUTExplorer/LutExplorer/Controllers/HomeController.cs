@@ -90,10 +90,24 @@ namespace LutExplorer.Controllers
                 pageNumber = 1;
             }
 
-            //int pageNumber = playerEntity.CurrentSearchedTreasure;
+            // handling translation
+
+            if (pageNumber == 801)
+            {
+                playerEntity.Lang = 1;
+                DatabaseManager.Instance.SavePlayer(playerEntity);
+                pageNumber = RouteManager.getPrevious(playerEntity.CurrentRoute, playerEntity.CurrentSearchedTreasure);
+            }
+            if (pageNumber == 802)
+            {
+                playerEntity.Lang = 2;
+                DatabaseManager.Instance.SavePlayer(playerEntity);
+                pageNumber = RouteManager.getPrevious(playerEntity.CurrentRoute, playerEntity.CurrentSearchedTreasure);
+            }
 
             //  Get page content and bag it for view
             Tuple<string, string, string, string> tuple = gameManager.getPageContent(playerEntity, pageNumber);
+            ViewBag.PlayTime = gameManager.GetPlayTime(playerEntity);
             ViewBag.Message = tuple.Item1;
             ViewBag.Context = tuple.Item2;
             ViewBag.Achievement = tuple.Item3;
