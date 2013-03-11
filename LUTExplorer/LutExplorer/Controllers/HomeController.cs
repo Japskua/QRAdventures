@@ -117,6 +117,16 @@ namespace LutExplorer.Controllers
                 pageNumber = RouteManager.getPrevious(playerEntity.CurrentRoute, playerEntity.CurrentSearchedTreasure);
             }
 
+            // skip checkpoint
+
+            if (pageNumber == 995)
+            {
+                Emailer.sendError(playerEntity.CurrentSearchedTreasure);
+                playerEntity.CurrentSearchedTreasure = RouteManager.getNext(playerEntity.CurrentRoute, playerEntity.CurrentSearchedTreasure);
+                DatabaseManager.Instance.SavePlayer(playerEntity);
+                
+            }
+
             //  Get page content and bag it for view
             Tuple<string, string, string, string> tuple = gameManager.getPageContent(playerEntity, pageNumber);
             
@@ -129,8 +139,12 @@ namespace LutExplorer.Controllers
             ViewBag.Achievement = tuple.Item3;
             ViewBag.Clue = tuple.Item4;
 
+            if (tuple.Item4 == "")
+                ViewBag.Quitter = "";
+            else ViewBag.Quitter = gameManager.getQuitter(playerEntity);
 
-            
+            if (playerEntity.Lang==1) ViewBag.ConfirmSkip = "\"Are you sure the QR-code is missing? Click OK skip this checkpoint\"";
+            else ViewBag.ConfirmSkip = "\"Oletko varma, että QR-koodi on kateissa? Valitsemalla OK pääset siirtymään seuraavalle rastille\"";
 
             if (playerEntity.Achievements != null && playerEntity.Achievements.Count() > 0)
             {
@@ -198,6 +212,7 @@ namespace LutExplorer.Controllers
             ViewBag.Context = tuple.Item2;
             ViewBag.Achievement = tuple.Item3;
             ViewBag.clue = tuple.Item4;
+            ViewBag.Quitter = gameManager.getQuitter(playerEntity);
             
 
             // earlier debugging shit: 
@@ -225,6 +240,8 @@ namespace LutExplorer.Controllers
 
         public ActionResult About()
         {
+            // now that the action links are gone, access this by [url]/Home/About
+
             // initialize the id and user type values
             string id = "";
             string userType = "";

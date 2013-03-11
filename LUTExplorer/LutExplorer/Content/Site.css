@@ -336,3 +336,24 @@ nav,
 .tri-state {
     width: 6em;
 }
+
+.button {
+     
+    /*Step 2: Basic Button Styles*/
+    display: block;
+    height: 70px;
+    width: 200px;
+    background: #5c87b2;
+    border: 2px solid rgba(33, 68, 72, 0.59);
+     
+    /*Step 3: Text Styles*/
+    color: #fff;
+    text-align: center;
+    font: bold 1.2em/28px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+ 
+/*Step 3: Link Styling*/
+a.button {
+    text-decoration: none;
+    color: #e8eef4;
+}

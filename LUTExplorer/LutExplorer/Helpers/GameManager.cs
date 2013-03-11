@@ -305,7 +305,7 @@ namespace LutExplorer.Helpers
                     return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 8:
-                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"This QR code is somewhere in Phase 1, on the top floor.\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 9:
                     return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"This QR code is somewhere in Phase 1.\";}"
@@ -373,7 +373,7 @@ namespace LutExplorer.Helpers
                     return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
                 case 8:
-                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee 1-vaiheen 5. kerroksessa.\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
                 case 9:
                     return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee 1-vaiheen 5. kerroksessa.\";}"
@@ -557,7 +557,7 @@ namespace LutExplorer.Helpers
                 {
                     //player.CurrentSearchedTreasure = 1;
                     //DatabaseManager.Instance.SavePlayer(player);
-                    return new Tuple<string, string, string, string>("You've finished the game!", " For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "");
+                    return new Tuple<string, string, string, string>("Congratulations, You've finished the game!", " For a new round <a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Click here</a>", "", "");
                 }
 
 
@@ -685,7 +685,7 @@ namespace LutExplorer.Helpers
                 {
                     //player.CurrentSearchedTreasure = 1;
                     //DatabaseManager.Instance.SavePlayer(player);
-                    return new Tuple<string, string, string, string>("Pääsit maaliin!", "<a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Uudelle kierrokselle</a>", "", "");
+                    return new Tuple<string, string, string, string>("Onneksi olkoon!! Pääsit maaliin!", "<a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\" >Uudelle kierrokselle</a>", "", "");
                 }
 
 
@@ -821,6 +821,13 @@ namespace LutExplorer.Helpers
             if (pl.Lang == 1)
                 return "LUT Explorer is a scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> <br /><a href = http://lutexplorer.cloudapp.net/?p=924679v >Science nigh</a>";
             else return "LUT Explorer on aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> <br /><a href = http://lutexplorer.cloudapp.net/?p=924679v >Tieteen ilta</a>";
+        }
+
+
+        public string getQuitter(PlayerEntity pl)
+        {
+            if (pl.Lang == 1) return "<a href=# class=button onclick=\"confirmSkip()\">This QR-code<br />is missing</a>";
+            else return "<a href=# class=button onclick=\"confirmSkip()\">QR-koodi <br />on kadonnut!</a>";
         }
         
     } // class end
