@@ -113,6 +113,7 @@ namespace LutExplorer.Helpers
             // Salvage all the important data from the entity because otherwise the query will destroy it.
             int currentSearchedTreasure = playerEntity.CurrentSearchedTreasure;
             int route = playerEntity.CurrentRoute;
+            int lang = playerEntity.Lang;
             Dictionary<int, DateTime> treasureChest = playerEntity.TreasureChest;
             Dictionary<string, DateTime> achievements = playerEntity.Achievements;
 
@@ -127,6 +128,7 @@ namespace LutExplorer.Helpers
                     checker.CurrentRoute = route;
                     checker.Achievements = achievements;
                     checker.TreasureChest = treasureChest;
+                    checker.Lang = lang;
                     serviceContext.UpdateObject(checker);
                 }
                 else

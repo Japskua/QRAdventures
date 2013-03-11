@@ -11,9 +11,13 @@ namespace LutExplorer.Helpers
 {
     public static class RouteManager
     {
-        private static List<int> route1 = new List<int>(new int[] {1, 13, 7, 10, 5, 2, 3, 6, 4, 11, 12, 9});
+        // as it stands, qr-codes 9 and 17 have been nicked. Hence use is a nogo.
+
+        private static List<int> route1 = new List<int>(new int[] {1, 13, 7, 10, 5, 2, 3, 6, 4, 11, 12, 8});
         
-        private static List<int> route2 = new List<int>(new int[] { 1, 15, 6, 8, 16});
+        private static List<int> route2 = new List<int>(new int[] { 1, 14, 6, 8, 10});
+
+        private static List<int> ti = new List<int>(new int[] { 1, 2, 16, 18}); // list number 3
 
         
         
@@ -27,15 +31,23 @@ namespace LutExplorer.Helpers
           
                 switch (route)
                 {
+                    case 999:
+                        return 999;
+
                     case 1:
                         if (route1.Count != route1.FindIndex(i => i == current) + 1)
                             return route1[route1.FindIndex(i => i == current) + 1];
                         else return 0;
                     case 2:
-                        if (route1.Count != route1.FindIndex(i => i == current) + 1)
+                        if (route2.Count != route2.FindIndex(i => i == current) + 1)
                             return route2[route2.FindIndex(i => i == current) + 1];
                         else return 0;
-                    default:
+
+                    case 3: 
+                        if (ti.Count != ti.FindIndex(i => i == current) + 1)
+                            return ti[ti.FindIndex(i => i == current) + 1];
+                        else return 0;
+                    default: 
                         return 0;
                 }
             
@@ -46,6 +58,9 @@ namespace LutExplorer.Helpers
         {
             switch (route)
             {
+                case 999:
+                    return 1;
+
                 case 1:
                     try
                     {
@@ -161,6 +176,8 @@ namespace LutExplorer.Helpers
                     return "Congratulations, you've found the (hidden in plain sight) telescope!";
                 case "superExplorer":
                     return "Well done, you keep finding our QR codes everywhere... <br />but not always the right ones.";
+                case "star":
+                    return "Well done, you've started the game!";
             }
 
             return "";
@@ -185,6 +202,8 @@ namespace LutExplorer.Helpers
                     return "Katso, mitä kaukoputkesta näkyy...!";
                 case "superExplorer":
                     return "Sinähän löydät QR-koodeja kaikkialta... ";
+                case "star":
+                    return "Aloitit pelin! Hyvä homma";
             }
 
             return "";

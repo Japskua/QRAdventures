@@ -80,15 +80,27 @@ namespace LutExplorer.Controllers
             if (pageNumber == 901)
             {
                 playerEntity.CurrentRoute = 1;
+                playerEntity.CurrentSearchedTreasure = RouteManager.getNext(1, 1);
                 DatabaseManager.Instance.SavePlayer(playerEntity);
                 pageNumber = 1;
             }
             if (pageNumber == 902)
             {
                 playerEntity.CurrentRoute = 2;
+                playerEntity.CurrentSearchedTreasure = RouteManager.getNext(2, 1);
                 DatabaseManager.Instance.SavePlayer(playerEntity);
                 pageNumber = 1;
             }
+
+            if (pageNumber == 903)
+            {
+                playerEntity.CurrentRoute = 3;
+                playerEntity.CurrentSearchedTreasure = RouteManager.getNext(3, 1);
+                DatabaseManager.Instance.SavePlayer(playerEntity);
+                pageNumber = 1;
+            }
+
+
 
             // handling translation
 
@@ -107,7 +119,11 @@ namespace LutExplorer.Controllers
 
             //  Get page content and bag it for view
             Tuple<string, string, string, string> tuple = gameManager.getPageContent(playerEntity, pageNumber);
-            ViewBag.PlayTime = gameManager.GetPlayTime(playerEntity);
+            
+            // ViewBag.PlayTime = gameManager.GetPlayTime(playerEntity);
+            // done goofed
+
+
             ViewBag.Message = tuple.Item1;
             ViewBag.Context = tuple.Item2;
             ViewBag.Achievement = tuple.Item3;
@@ -118,8 +134,15 @@ namespace LutExplorer.Controllers
 
             if (playerEntity.Achievements != null && playerEntity.Achievements.Count() > 0)
             {
+                if (playerEntity.Lang == 1)
+                {
 
-                ViewBag.Badges += "<h3>Your achievement badges:</h3><br />";
+                    ViewBag.Badges += "<h3>Your achievement badges:</h3><br />";
+                }
+                else
+                {
+                    ViewBag.Badges += "<h3>Achievementtisi:</h3><br />";
+                }
                 ViewBag.Badges += "<table><tr><td>";
                 i = 0;
                 foreach (KeyValuePair<string, DateTime> n in playerEntity.Achievements)

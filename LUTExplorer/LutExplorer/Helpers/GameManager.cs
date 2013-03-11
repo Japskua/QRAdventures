@@ -192,11 +192,11 @@ namespace LutExplorer.Helpers
                     case 15:
                         return "";
                     case 16:
-                        return "";
+                        return "This ad by LUT Energy won an award for best local tv commercial <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/DJmE4XmkiF0\" frameborder=\"0\" allowfullscreen></iframe>";
                     case 17:
-                        return "";
+                        return "Another exellent tv commercial from LUT <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/jso2poh3MTs\" frameborder=\"0\" allowfullscreen></iframe>";
                     case 18:
-                        return "";
+                        return "Green Campus: <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/_CTVQzyka2E\" frameborder=\"0\" allowfullscreen></iframe>";
                     case 19:
                         return "";
                     case 20:
@@ -211,6 +211,65 @@ namespace LutExplorer.Helpers
 
                         
         }
+
+
+        public string getPageContextFin(int treasure)
+        {
+
+            switch (treasure)
+            {
+                case 1:
+                    return "Tiesitkö että ... <br />"
+                        + "Nykkyinen päärakennus on rakennettu vuosina 1999-2000. Design on arkkitehtikilpailun tulos.";
+                case 2:
+                    //return "Kari Smolander, Professor in Software engineering, is also known for being the guitarist of Alice in Wasteland. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
+                return "Ohjelmistotekniikan professori Kari Smolander tunnetaan myös Alice in Wasteland -yhtyeen kitaristina. <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/ZFWNhwNR30g\" frameborder=\"0\" allowfullscreen></iframe>";
+                case 3:
+                    return "";
+                case 4:
+                    //return "Department of Information Technology moved from this building in 2011 but the sign remains in place.";
+                    return "Tietotekniikan osasto muutti pois 6-vaiheen yläkerroksista jo keväällä 2011, mutta kyltti jäi.";
+                case 5:
+                    return "";
+                case 6:
+                    //return "Can you guess what the wooden ornaments on the wall depict?";
+                    return "Kukaan ei tarkalleen tiedä, mitä nuo puukoristeet seinällä mahtavat esittää.";
+                case 7:
+                    //return "For as long as the developers of LUT Explorer have been around LUT there has never been anything on display in this glass cabinet";
+                    return "Tässä vitriinissä ei ole koskaan esitelty mitään.";
+                case 8:
+                    return "";
+                case 9:
+                    //return "With the telescope you can check out the green windmill up close.";
+                    return "Kaukoputkesta voi tarkastella vaikkapa LUTin vihreää tuulimyllyä lähemmin!";
+                case 10:
+                    return "Näillä koneilla voit skypettää vaikka kiinaan asti!";
+                case 11:
+                    return "Monen kauppatieteilijän mielestä kampuksen paras näköalapaikka.";
+                case 12:
+                    return "Ylioppilastalon veppikioski, otettu käyttöön 12.4.2008";
+                case 13:
+                    return "";
+                case 14:
+                    return "";
+                case 15:
+                    return "";
+                case 16:
+                    return "LUT Energian palkittu tv-mainos: <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/DJmE4XmkiF0\" frameborder=\"0\" allowfullscreen></iframe>";
+                case 17:
+                    return "<br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/jso2poh3MTs\" frameborder=\"0\" allowfullscreen></iframe>";
+                case 18:
+                    return "Green Campus: <br /><iframe width=\"420\" height=\"315\" src=\"http://www.youtube.com/embed/_CTVQzyka2E\" frameborder=\"0\" allowfullscreen></iframe>";
+                case 19:
+                    return "";
+                case 20:
+                    return "";
+
+
+                default:
+                    return " ";
+            }
+        } // method end
 
         /// <summary>
         /// Shit method for passing relevant clues to next check points
@@ -240,7 +299,8 @@ namespace LutExplorer.Helpers
                     return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/"+ number+"/h.jpg>\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>"; 
                 case 6:
-                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>"; 
                 case 7:
                     return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
@@ -263,7 +323,8 @@ namespace LutExplorer.Helpers
                     return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Point your nose towards LUT Language Centre..\";}"
                         + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 14:
-                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Point your LUT Information Technology. Use the stairs!\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>";
                 case 15:
                     return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 16:
@@ -271,7 +332,8 @@ namespace LutExplorer.Helpers
                 case 17:
                     return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 18:
-                    return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                    return "<h2>Your next checkpoint is here:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Give me a hint</p></a><br /><p id=\"tip\"></p>"; 
                 case 19:
                     return "<h2>Your next checkpoint is here:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
                 case 20:
@@ -279,6 +341,74 @@ namespace LutExplorer.Helpers
 
                 default:
                     return ""; 
+            }
+
+        }
+
+        public string getPageClueFin(int number)
+        {
+            switch (number)
+            {
+
+                case 0:
+                    return "Pääsit maaliin! <ul><li><a href=\"http://lutexplorer.cloudapp.net/?p=1021959v\">uudelle kierrokselle</a></li></ul>";
+                case 1:
+                    return "";
+
+                case 2:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee tietotekniikan osastolla\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+
+                case 3:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                case 4:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                case 5:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 6:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 7:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 8:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 9:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti sijaitsee 1-vaiheen 5. kerroksessa.\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 10:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Rasti on 7. rakennusvaiheen hissin liepeillä\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 11:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg width=40%>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><p id=\"tip\"><a onclick=tip()><p class=\"hint\">Anna vihje</p></a></p>";
+                case 12:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Suuntaa kohti ylioppilastaloa..\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 13:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Suuntaa kielikeskukseen..\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 14:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"Käy Tietotekniikan osastolla, ja käytä portaita!!\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 15:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                case 16:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                case 17:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                case 18:
+                    return "<h2>Seuraava rasti:</h2><script>function tip(){document.getElementById(\"tip\").innerHTML=\"<img src = ../../Content/pics/" + number + "/h.jpg width=40%>\";}"
+                        + "</script> <img src= ../../Content/pics/" + number + "/p.jpg width=40% /> <br /><a onclick=\"tip()\"><p class=\"hint\">Anna vihje</p></a><br /><p id=\"tip\"></p>";
+                case 19:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+                case 20:
+                    return "<h2>Seuraava rasti:</h2><img src= ../../Content/pics/" + number + "/p.jpg width=40% />";
+
+                default:
+                    return "";
             }
 
         }
@@ -330,6 +460,60 @@ namespace LutExplorer.Helpers
                 }
                 return null;
             }
+
+
+
+            if (player.CurrentRoute == 3)
+            {
+                switch (pageNumber)
+                {
+
+                    case 1:
+                        return "star";
+                    case 2:
+                        return "halfway";
+                    case 3:
+                        return null;
+                    case 4:
+                        if (RouteManager.CheckTimeAchievements(4, 1, 23, player))
+                            return "speedy";
+                        return null;
+                    case 5:
+                        return null;
+                    case 6:
+                        return null;
+                    case 7:
+                        return null;
+                    case 8:
+                        return null;
+                    case 9:
+                        return null;
+                    case 10:
+                        return null;
+                    case 13:
+
+                    case 17:
+                        if (RouteManager.CheckTimeAchievements(17, 1, 15, player))
+                            return "speedy";
+                        return null;
+
+                    case 18:
+                        if (RouteManager.CheckTimeAchievements(18, 1, 30, player))
+                            return "speedy";
+                        return null;
+
+                    case 19:
+                        if (RouteManager.CheckTimeAchievements(19, 1, 45, player))
+                            return "speedy";
+                        return null;
+                        return null;
+                }
+                return null;
+            }
+
+
+
+
             else return null;
         }
 
@@ -346,6 +530,8 @@ namespace LutExplorer.Helpers
         public Tuple<string,string,string,string> getPageContent(PlayerEntity player, int pageNumber)
         {
             // this is the worst way to do shit :|
+
+            if (player == null) return new Tuple<string, string, string, string>("", "", "", "");
 
             if (player.Lang == 1) // lang = eng
             {
@@ -390,7 +576,7 @@ namespace LutExplorer.Helpers
                     {
                         case "Regular":
                             // if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", "", "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", getPage1Content(player), "", "");
                             return new Tuple<string, string, string, string>("You found the checkpoint!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
 
                         case "Achievements":
@@ -398,13 +584,13 @@ namespace LutExplorer.Helpers
 
                             //return content
                             //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
 
                             return new Tuple<string, string, string, string>("You found the checkpoint!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
 
                         case "Context":
                             //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", "", "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", getPage1Content(player), "", "");
 
                             return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
 
@@ -413,7 +599,7 @@ namespace LutExplorer.Helpers
 
 
                             //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
 
                             return new Tuple<string, string, string, string>("You found the checkpoint!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                         default:
@@ -421,16 +607,26 @@ namespace LutExplorer.Helpers
                     }
                 }
 
+                if (player.CurrentRoute == 999)
+                {
+                    if (pageNumber == 1)
+                        return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", getPage1Content(player), "", "");
+
+
+                    return new Tuple<string, string, string, string>("Welcome to LUT Explorer - The game", "Game starts from the university main hall.<br />", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                }
+
+
                     //if this is just a page reload
                 else if (pageNumber == RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure))
                 {
 
                     // if player gets achievements, get reload achievement 
 
-                    if (pageNumber == 1) // does the player just want to start over?
+                    if (pageNumber == 1 && player.CurrentRoute == 0) // does the player just want to start over?
                     {
-                        // TODO: add a link to reload page
-                        return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                        
+                        return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
                     }
 
                     return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
@@ -508,51 +704,66 @@ namespace LutExplorer.Helpers
                     {
                         case "Regular":
                             // if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", "", "");
-                            return new Tuple<string, string, string, string>("Löysit rastin!", "", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", getPage1Content(player), "", "");
+                            return new Tuple<string, string, string, string>("Löysit rastin!", "", "", getPageClueFin(RouteManager.getNext(player.CurrentRoute, pageNumber)));
 
                         case "Achievements":
                             // GET achievement here
 
                             //return content
                             //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
 
-                            return new Tuple<string, string, string, string>("Löysit rastin!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            return new Tuple<string, string, string, string>("Löysit rastin!", "", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClueFin(RouteManager.getNext(player.CurrentRoute, pageNumber)));
 
                         case "Context":
                             //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", "", "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", getPage1Content(player), "", "");
 
-                            return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), "", getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            return new Tuple<string, string, string, string>("Löysit rastin!", getPageContextFin(pageNumber), "", getPageClueFin(RouteManager.getNext(player.CurrentRoute, pageNumber)));
 
                         case "ContextAchievements":
                             // GET achievement here
 
 
                             //if (pageNumber == 1) return new Tuple<string, string, string, string>("Welcome to the LUT Explorer game.", "LUT Explorer is a pervasive scavenger hunt game.<br />You must now find the next checkpoint. Good hunting!", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
-                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                            if (pageNumber == 1) return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
 
-                            return new Tuple<string, string, string, string>("Löysit rastin!", getPageContext(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClue(RouteManager.getNext(player.CurrentRoute, pageNumber)));
+                            return new Tuple<string, string, string, string>("Löysit rastin!", getPageContextFin(pageNumber), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), getPageClueFin(RouteManager.getNext(player.CurrentRoute, pageNumber)));
                         default:
                             return new Tuple<string, string, string, string>(" ", " ", " ", " " + " ");
                     }
                 }
 
-                    //if this is just a page reload
+                if (player.CurrentRoute == 999)
+                {
+                    if (pageNumber == 1)
+                        return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+
+
+                    return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "Peli alkaa yliopiston pääaulasta.<br />", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                }
+
+                //if this is just a page reload
                 else if (pageNumber == RouteManager.getPrevious(player.CurrentRoute, player.CurrentSearchedTreasure))
                 {
 
                     // if player gets achievements, get reload achievement 
 
-                    if (pageNumber == 1) // does the player just want to start over?
+                    if (pageNumber == 1 && player.CurrentRoute == 999) // has the player started the game?
                     {
                         // TODO: add a link to reload page
-                        return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", "LUT Explorer on pervasiivinen aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> ", GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
+                        return new Tuple<string, string, string, string>("Tervetuloa LUT Explorer -peliin.", getPage1Content(player), GetAchievement(player, GetAchievementFromNumber(pageNumber, player)), "");
                     }
 
-                    return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                    return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClueFin(player.CurrentSearchedTreasure));
                 }
+
+                else if (pageNumber == 1 && player.TreasureChest.Count < 2)
+                {
+                    return new Tuple<string, string, string, string>(" ", " ", " ", " " + getPageClueFin(player.CurrentSearchedTreasure));
+                }
+
 
                  // player is at the wrong checkpoint
                 else
@@ -560,7 +771,7 @@ namespace LutExplorer.Helpers
                     if (pageNumber == 1) // does the player just want to start over?
                     {
                         // TODO: add a link to reload page
-                        return new Tuple<string, string, string, string>("Aulassa taas... Haluatko aloittaa alusta?", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                        return new Tuple<string, string, string, string>("Aulassa taas... Haluatko aloittaa alusta?", " ", " ", " " + getPageClueFin(player.CurrentSearchedTreasure));
                     }
 
 
@@ -568,13 +779,13 @@ namespace LutExplorer.Helpers
                     if (player.PartitionKey == PlayerEntity.UserType.Achievements.ToString() || player.PartitionKey == PlayerEntity.UserType.ContextAchievements.ToString())
                     {
                         if (player.CurrentSearchedTreasure == 1)
-                            return new Tuple<string, string, string, string>("LUT Explorer - The Game!", "Peli alkaa yliopiston pääaulasta", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                            return new Tuple<string, string, string, string>("LUT Explorer - The Game!", "Peli alkaa yliopiston pääaulasta", GetAchievement(player, "explorer"), " " + getPageClueFin(player.CurrentSearchedTreasure));
                         else
-                            return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", GetAchievement(player, "explorer"), " " + getPageClue(player.CurrentSearchedTreasure));
+                            return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", GetAchievement(player, "explorer"), " " + getPageClueFin(player.CurrentSearchedTreasure));
                     }
                     else
                     {
-                        return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", " ", " " + getPageClue(player.CurrentSearchedTreasure));
+                        return new Tuple<string, string, string, string>("Olet väärällä rastilla", " ", " ", " " + getPageClueFin(player.CurrentSearchedTreasure));
                     }
                 }
             } // LANG END
@@ -601,6 +812,16 @@ namespace LutExplorer.Helpers
 
         } //method ends
 
+
+
+
+
+        public string getPage1Content(PlayerEntity pl)
+        {
+            if (pl.Lang == 1)
+                return "LUT Explorer is a scavenger hunt game.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Longer Route</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Shorter Route</a> <br /><a href = http://lutexplorer.cloudapp.net/?p=924679v >Science nigh</a>";
+            else return "LUT Explorer on aarteenmetsästyspeli.<br /><a href = http://lutexplorer.cloudapp.net/?p=922631v >Pidempi reitti</a><br /><a href = http://lutexplorer.cloudapp.net/?p=923655v >Lyhyempi reitti</a> <br /><a href = http://lutexplorer.cloudapp.net/?p=924679v >Tieteen ilta</a>";
+        }
         
     } // class end
 } // namespace ends

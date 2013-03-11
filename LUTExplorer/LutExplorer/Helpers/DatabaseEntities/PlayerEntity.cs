@@ -41,7 +41,7 @@ namespace LutExplorer.Helpers.DatabaseEntities
             Achievements = new Dictionary<string, DateTime>();
             
             CurrentSearchedTreasure = 1;
-            CurrentRoute = 1;
+            CurrentRoute = 999;
             Lang = 2;
 
 
